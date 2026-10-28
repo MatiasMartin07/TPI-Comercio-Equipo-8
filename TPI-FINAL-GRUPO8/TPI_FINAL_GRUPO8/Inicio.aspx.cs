@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace TPI_FINAL_GRUPO8
 {
-    public partial class About : Page
+    public partial class Inicio : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

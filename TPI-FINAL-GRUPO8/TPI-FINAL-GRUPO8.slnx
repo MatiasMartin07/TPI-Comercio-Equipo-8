@@ -1,5 +1,5 @@
 <Solution>
-  <Folder Name="/Dominio/" />
-  <Folder Name="/Negocio/" />
-  <Project Path="TPI_FINAL_GRUPO8/TPI_FINAL_GRUPO8.csproj" />
+  <Project Path="Dominio/Dominio.csproj" Id="f3e6fa21-3772-444c-a9b1-80a6872a05ef" />
+  <Project Path="Negocio/Negocio.csproj" Id="512e5ad0-1b96-4844-8567-f5ed3d89e55c" />
+  <Project Path="TPI_FINAL_GRUPO8/TPI_FINAL_GRUPO8.csproj" Id="d9c102e0-58c9-4163-9821-8853bda8639e" />
 </Solution>

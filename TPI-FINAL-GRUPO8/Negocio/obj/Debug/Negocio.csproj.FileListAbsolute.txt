@@ -1,0 +1,9 @@
+D:\TPI Final\TPI-FINAL-GRUPO8\Negocio\bin\Debug\Negocio.dll
+D:\TPI Final\TPI-FINAL-GRUPO8\Negocio\bin\Debug\Negocio.pdb
+D:\TPI Final\TPI-FINAL-GRUPO8\Negocio\bin\Debug\Dominio.dll
+D:\TPI Final\TPI-FINAL-GRUPO8\Negocio\bin\Debug\Dominio.pdb
+D:\TPI Final\TPI-FINAL-GRUPO8\Negocio\obj\Debug\Negocio.csproj.AssemblyReference.cache
+D:\TPI Final\TPI-FINAL-GRUPO8\Negocio\obj\Debug\Negocio.csproj.CoreCompileInputs.cache
+D:\TPI Final\TPI-FINAL-GRUPO8\Negocio\obj\Debug\Negocio.csproj.Up2Date
+D:\TPI Final\TPI-FINAL-GRUPO8\Negocio\obj\Debug\Negocio.dll
+D:\TPI Final\TPI-FINAL-GRUPO8\Negocio\obj\Debug\Negocio.pdb
