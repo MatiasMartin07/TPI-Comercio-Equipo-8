@@ -30,3 +30,44 @@ GO
 
 
 select * from Producto;
+go
+create table Cliente(
+    Id int not null primary key identity(1,1),
+    Nombre varchar(50) not null,
+    Apellido varchar(50) not null,
+    Activo Bit not null default 1
+)
+
+select * from Cliente
+
+--Procedimiento Almacenado---
+--Alter PROCEDURE sp_listaCliente
+--AS
+--BEGIN
+--    SELECT Id, Nombre, Apellido, Activo 
+--    FROM Cliente
+--END
+
+--INSERT INTO Cliente (Nombre, Apellido, Activo) 
+--VALUES 
+--('Juan', 'Pérez',1),
+--('María', 'Gómez',1),
+--('Carlos', 'Rodríguez',1),
+--('Ana', 'Martínez',1);
+
+CREATE TABLE Usuario (
+    Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(50) NOT NULL,
+    Apellido VARCHAR(50) NOT NULL,
+    NombreUsuario VARCHAR(50) NOT NULL UNIQUE, 
+    Pass VARCHAR(100) NOT NULL,
+    Rol VARCHAR(30) NOT NULL,                
+    Activo BIT NOT NULL DEFAULT 1
+);
+
+--INSERT INTO Usuario (Nombre, Apellido, NombreUsuario, Pass, Rol, Activo) 
+--VALUES 
+--('Carlos', 'Administrador', 'admin', '1234', 'Administrador', 1),
+--('Lucía', 'Gómez', 'lgomez', 'abcd', 'Vendedor', 1),
+--('Esteban', 'Pérez', 'eperez', 'clave123', 'Vendedor', 1),
+--('Mariana', 'López', 'mlopez', 'pass456', 'Administrador', 1);
