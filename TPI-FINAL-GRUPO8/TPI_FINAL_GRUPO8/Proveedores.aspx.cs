@@ -13,13 +13,13 @@ namespace TPI_FINAL_GRUPO8
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                ProveedoresNegocio negocio = new ProveedoresNegocio();
-                List<Dominio.Proveedores> lista = negocio.Listar();
-                gvProveedores.DataSource = lista;
-                gvProveedores.DataBind();
-            }
+            //if (!IsPostBack)
+            //{
+            //    ProveedoresNegocio negocio = new ProveedoresNegocio();
+            //    List<Dominio.Proveedores> lista = negocio.Listar();
+            //    gvProveedores.DataSource = lista;
+            //    gvProveedores.DataBind();
+            //}
         }
     }
 }
