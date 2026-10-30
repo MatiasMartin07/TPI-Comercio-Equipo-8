@@ -10,3 +10,9 @@ C:\TPC-Comercio\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Dominio\obj\Debug\Dominio
 C:\TPC-Comercio\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Dominio\obj\Debug\Dominio.csproj.CoreCompileInputs.cache
 C:\TPC-Comercio\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Dominio\obj\Debug\Dominio.dll
 C:\TPC-Comercio\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Dominio\obj\Debug\Dominio.pdb
+C:\COMERCIO.TPC\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Dominio\bin\Debug\Dominio.dll
+C:\COMERCIO.TPC\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Dominio\bin\Debug\Dominio.pdb
+C:\COMERCIO.TPC\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Dominio\obj\Debug\Dominio.csproj.AssemblyReference.cache
+C:\COMERCIO.TPC\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Dominio\obj\Debug\Dominio.csproj.CoreCompileInputs.cache
+C:\COMERCIO.TPC\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Dominio\obj\Debug\Dominio.dll
+C:\COMERCIO.TPC\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Dominio\obj\Debug\Dominio.pdb

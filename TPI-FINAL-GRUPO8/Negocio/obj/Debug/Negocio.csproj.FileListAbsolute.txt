@@ -16,3 +16,12 @@ C:\TPC-Comercio\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Negocio\obj\Debug\Negocio
 C:\TPC-Comercio\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Negocio\obj\Debug\Negocio.csproj.Up2Date
 C:\TPC-Comercio\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Negocio\obj\Debug\Negocio.dll
 C:\TPC-Comercio\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Negocio\obj\Debug\Negocio.pdb
+C:\COMERCIO.TPC\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Negocio\bin\Debug\Negocio.dll
+C:\COMERCIO.TPC\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Negocio\bin\Debug\Negocio.pdb
+C:\COMERCIO.TPC\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Negocio\bin\Debug\Dominio.dll
+C:\COMERCIO.TPC\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Negocio\bin\Debug\Dominio.pdb
+C:\COMERCIO.TPC\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Negocio\obj\Debug\Negocio.csproj.AssemblyReference.cache
+C:\COMERCIO.TPC\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Negocio\obj\Debug\Negocio.csproj.CoreCompileInputs.cache
+C:\COMERCIO.TPC\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Negocio\obj\Debug\Negocio.csproj.Up2Date
+C:\COMERCIO.TPC\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Negocio\obj\Debug\Negocio.dll
+C:\COMERCIO.TPC\TPI-Comercio-Equipo-8\TPI-FINAL-GRUPO8\Negocio\obj\Debug\Negocio.pdb

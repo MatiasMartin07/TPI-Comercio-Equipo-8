@@ -120,6 +120,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Facturas.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="FormCliente.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
@@ -210,6 +211,13 @@
     </Compile>
     <Compile Include="Facturas.aspx.designer.cs">
       <DependentUpon>Facturas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FormCliente.aspx.cs">
+      <DependentUpon>FormCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormCliente.aspx.designer.cs">
+      <DependentUpon>FormCliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
