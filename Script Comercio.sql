@@ -5,27 +5,64 @@ go
 use COMERCIO_TP_FINAL
 go
 
-create table Producto(
+CREATE TABLE Marca (
+    IdMarca INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(100) NOT NULL,
+    Activo BIT NOT NULL DEFAULT 1
+);
+
+CREATE TABLE Categoria (
+    IdCategoria INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(100) NOT NULL,
+    Activo BIT NOT NULL DEFAULT 1
+);
+
+
+CREATE TABLE Producto (
     IdProducto INT PRIMARY KEY IDENTITY(1,1),
     Nombre VARCHAR(100) NOT NULL,
+    IdMarca INT NOT NULL,
+    IdCategoria INT NOT NULL,
     StockActual INT NOT NULL,
     StockMinimo INT NOT NULL,
     UltimoPrecioCompra DECIMAL(18,2) NOT NULL,
     PorcentajeGanancia DECIMAL(5,2) NOT NULL,
-    Activo BIT NOT NULL
+    UrlImagen VARCHAR(2048) NULL,
+    Activo BIT NOT NULL,
+
+    CONSTRAINT FK_Producto_Marca
+        FOREIGN KEY (IdMarca) REFERENCES Marca(IdMarca),
+
+    CONSTRAINT FK_Producto_Categoria
+        FOREIGN KEY (IdCategoria) REFERENCES Categoria(IdCategoria)
 );
 
-insert into Producto(Nombre,StockActual,StockMinimo,UltimoPrecioCompra,PorcentajeGanancia,Activo)
-values  ('Cafe molido',15,10,850.00,25.00,1),
-        ('Yerba mate', 8, 10, 1100.00, 20.00, 1),
-        ('Azucar', 20, 5, 650.00, 25.00, 1),
-        ('Leche', 18, 10, 1200.00, 20.00, 1),
-        ('Harina', 25, 8, 800.00, 30.00, 1),
-        ('Arroz', 30, 10, 950.00, 25.00, 1),
-        ('Fideos', 22, 8, 750.00, 30.00, 1),
-        ('Aceite', 12, 5, 1800.00, 20.00, 1),
-        ('Galletitas', 16, 6, 900.00, 35.00, 1),
-        ('Detergente', 14, 5, 1500.00, 30.00, 1);
+INSERT INTO Marca (Nombre)
+VALUES ('Cabrales'),
+       ('La Serenísima'),
+       ('Marolio');
+
+INSERT INTO Categoria (Nombre)
+VALUES ('Almacén'),
+       ('Lácteos'),
+       ('Limpieza');
+
+INSERT INTO Producto (
+    Nombre, IdMarca, IdCategoria,
+    StockActual, StockMinimo,
+    UltimoPrecioCompra, PorcentajeGanancia, Activo
+)
+VALUES
+    ('Cafe molido', 1, 1, 15, 10, 850.00, 25.00, 1),
+    ('Yerba mate',  3, 1,  8, 10, 1100.00, 20.00, 1),
+    ('Azucar',      3, 1, 20,  5, 650.00, 25.00, 1),
+    ('Leche',       2, 2, 18, 10, 1200.00, 20.00, 1),
+    ('Harina',      3, 1, 25,  8, 800.00, 30.00, 1),
+    ('Arroz',       3, 1, 30, 10, 950.00, 25.00, 1),
+    ('Fideos',      3, 1, 22,  8, 750.00, 30.00, 1),
+    ('Aceite',      3, 1, 12,  5, 1800.00, 20.00, 1),
+    ('Galletitas',  3, 1, 16,  6, 900.00, 35.00, 1),
+    ('Detergente',  3, 3, 14,  5, 1500.00, 30.00, 1);
 GO
 
 
@@ -120,3 +157,4 @@ CREATE TABLE Usuario (
 --('Lucía', 'Gómez', 'lgomez', 'abcd', 'Vendedor', 1),
 --('Esteban', 'Pérez', 'eperez', 'clave123', 'Vendedor', 1),
 --('Mariana', 'López', 'mlopez', 'pass456', 'Administrador', 1);
+

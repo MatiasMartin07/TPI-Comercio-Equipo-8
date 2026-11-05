@@ -16,6 +16,7 @@ namespace Dominio
         public int StockMinimo { get; set; }
         public decimal UltimoPrecioCompra { get; set; }
         public decimal PorcentajeGanancia { get; set; }
+        public string  UrlImagen { get; set; }
         public bool Activo { get; set; }
 
         public decimal CalcularPrecioVenta() 

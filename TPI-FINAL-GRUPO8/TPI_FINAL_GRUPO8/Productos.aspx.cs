@@ -19,5 +19,44 @@ namespace TPI_FINAL_GRUPO8
                 gvProductos.DataBind();
             }
         }
+        protected void gvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "SolicitarEliminacion")
+            {
+                ViewState["IdProductoEliminar"] = Convert.ToInt32(e.CommandArgument);
+                pnlConfirmarEliminacion.Visible = true;
+                ScriptManager.RegisterStartupScript(
+                this,
+                GetType(),
+                "abrirConfirmacion",
+                "window.addEventListener('load', function () { " +
+                "var ventana = new bootstrap.Modal(document.getElementById('pnlConfirmarEliminacion')); " +
+                "ventana.show(); " +
+                "});",
+                true);
+            }
+        }
+        protected void btnCancelarEliminacion_Click(object sender, EventArgs e)
+        {
+            pnlConfirmarEliminacion.Visible = false;
+            ViewState.Remove("IdProductoEliminar");
+        }
+        protected void btnConfirmarEliminacion_Click(object sender, EventArgs e)
+        {
+            if (ViewState["IdProductoEliminar"] == null)
+            {
+                return;
+            }
+
+            int idProducto = Convert.ToInt32(ViewState["IdProductoEliminar"]);
+
+            ProductoNegocio negocio = new ProductoNegocio();
+            negocio.Eliminar(idProducto);
+
+            ViewState.Remove("IdProductoEliminar");
+
+            Response.Redirect("Productos.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
+        }
     }
 }
