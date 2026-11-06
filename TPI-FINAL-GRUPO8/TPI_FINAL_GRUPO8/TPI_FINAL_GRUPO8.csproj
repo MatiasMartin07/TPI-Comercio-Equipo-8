@@ -121,9 +121,11 @@
     <Content Include="Facturas.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="FormCliente.aspx" />
+    <Content Include="FormMarca.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="Marcas.aspx" />
     <Content Include="Productos.aspx" />
     <Content Include="Imagenes\productoSinImagen.png" />
     <Content Include="Proveedores.aspx" />
@@ -221,6 +223,13 @@
     <Compile Include="FormCliente.aspx.designer.cs">
       <DependentUpon>FormCliente.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FormMarca.aspx.cs">
+      <DependentUpon>FormMarca.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormMarca.aspx.designer.cs">
+      <DependentUpon>FormMarca.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -237,6 +246,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Marcas.aspx.cs">
+      <DependentUpon>Marcas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Marcas.aspx.designer.cs">
+      <DependentUpon>Marcas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Productos.aspx.cs">
       <DependentUpon>Productos.aspx</DependentUpon>

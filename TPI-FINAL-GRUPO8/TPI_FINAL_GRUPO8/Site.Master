@@ -15,6 +15,13 @@
 
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <style>
+        .menu-productos:hover > .dropdown-menu,
+        .menu-productos:focus-within > .dropdown-menu {
+            display: block;
+            margin-top: 0;
+        }
+    </style>
 
 </head>
 <body>
@@ -48,7 +55,21 @@
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <%--<li class="nav-item"><a class="nav-link" runat="server" href="~/Inicio">Inicio</a></li>--%>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Productos">Productos</a></li>
+                        <li class="nav-item dropdown menu-productos">
+                            <a class="nav-link dropdown-toggle" runat="server"
+                                href="~/Productos">Productos
+    </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" runat="server"
+                                        href="~/Marcas.aspx">Marca</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" runat="server"
+                                        href="~/Categorias.aspx">Categoría</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Proveedores">Proveedores</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Clientes">Clientes</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Ventas">Ventas</a></li>

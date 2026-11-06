@@ -17,7 +17,7 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT IdMarca, Nombre, Activo FROM Marca WHERE Activo = 1");
+                datos.setearConsulta("SELECT IdMarca, Nombre, Activo FROM Marca");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read()) 
@@ -35,6 +35,107 @@ namespace Negocio
             catch (Exception)
             {
                 throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void Agregar(Marca nueva)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("INSERT INTO Marca (Nombre, Activo) VALUES (@Nombre, 1)");
+                datos.setearParametro("@Nombre", nueva.Nombre);
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public Marca BuscarPorId(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT IdMarca, Nombre, Activo FROM Marca WHERE IdMarca = @Id");
+                datos.setearParametro("@Id", id);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    Marca seleccionada = new Marca();
+
+                    seleccionada.IdMarca = (int)datos.Lector["IdMarca"];
+                    seleccionada.Nombre = (string)datos.Lector["Nombre"];
+                    seleccionada.Activo = (bool)datos.Lector["Activo"];
+
+                    return seleccionada;
+                }
+
+                return null;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void Modificar(Marca marca)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE Marca SET Nombre = @Nombre WHERE IdMarca = @Id");
+                datos.setearParametro("@Nombre", marca.Nombre);
+                datos.setearParametro("@Id", marca.IdMarca);
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void Desactivar(int idMarca)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE Marca SET Activo = 0 WHERE IdMarca = @IdMarca");
+                datos.setearParametro("@IdMarca", idMarca);
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void Reactivar(int idMarca)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE Marca SET Activo = 1 WHERE IdMarca = @IdMarca");
+                datos.setearParametro("@IdMarca", idMarca);
+                datos.ejecutarAccion();
             }
             finally
             {
