@@ -157,4 +157,90 @@ CREATE TABLE Usuario (
 --('Lucía', 'Gómez', 'lgomez', 'abcd', 'Vendedor', 1),
 --('Esteban', 'Pérez', 'eperez', 'clave123', 'Vendedor', 1),
 --('Mariana', 'López', 'mlopez', 'pass456', 'Administrador', 1);
+<<<<<<< Updated upstream
 
+=======
+go
+create table Proveedor(
+IdProveedor INT PRIMARY KEY IDENTITY(1,1),
+Codigo VARCHAR(50) UNIQUE NOT NULL,
+RazonSocial VARCHAR(100) NOT NULL,
+CUIT VARCHAR(20),
+Telefono VARCHAR(20),
+Mail VARCHAR(50),
+Activo bit
+);
+go
+insert into Proveedor values ('M1020', 'Dos Anclas', '20123456789', '1145678855', 'dosanclas@gmail.com', 1)
+
+--select * from Proveedor
+
+Create Procedure spListaProveedor
+AS
+BEGIN
+    SELECT IdProveedor, Codigo, RazonSocial,CUIT,Telefono,Mail ,Activo 
+    FROM Proveedor
+END
+
+--1 SP Para agregar Proveedor
+CREATE PROCEDURE SP_AgregarProveedor
+    @Codigo VARCHAR(50),
+    @RazonSocial VARCHAR(100),
+    @CUIT VARCHAR(20),
+    @Telefono VARCHAR(20),
+    @Mail VARCHAR(50)
+AS
+BEGIN
+    INSERT INTO Proveedor (Codigo, RazonSocial, CUIT, Telefono, Mail, Activo)
+    VALUES (@Codigo, @RazonSocial, @CUIT, @Telefono, @Mail, 1)
+END
+GO
+-- 2 SP Para modificar el proveedor 
+CREATE PROCEDURE SP_ModificarProveedor
+    @IdProveedor INT,
+    @Codigo VARCHAR(50),
+    @RazonSocial VARCHAR(100),
+    @CUIT VARCHAR(20),
+    @Telefono VARCHAR(20),
+    @Mail VARCHAR(50)
+AS
+BEGIN
+    UPDATE Proveedor 
+    SET Codigo = @Codigo,
+        RazonSocial = @RazonSocial,
+        CUIT = @CUIT,
+        Telefono = @Telefono,
+        Mail = @Mail
+    WHERE IdProveedor = @IdProveedor
+END
+GO
+
+-- 3 SP para la baja logica
+CREATE PROCEDURE SP_BajaProveedor
+    @IdProveedor INT
+AS
+BEGIN
+    UPDATE Proveedor 
+    SET Activo = 0 
+    WHERE IdProveedor = @IdProveedor
+END
+GO
+Create Procedure spListaIDProveedor
+@idProveedor int
+AS
+BEGIN
+    SELECT IdProveedor, Codigo, RazonSocial,CUIT,Telefono, mail, Activo 
+    FROM Proveedores where IdProveedores=@idProveedor
+END
+GO
+--SP Para buscar por cuit
+CREATE PROCEDURE spBuscarPorCuit
+    @CUIT VARCHAR(20)
+AS
+BEGIN
+    SELECT IdProveedor 
+    FROM Proveedor 
+    WHERE CUIT = @CUIT
+END
+GO
+>>>>>>> Stashed changes

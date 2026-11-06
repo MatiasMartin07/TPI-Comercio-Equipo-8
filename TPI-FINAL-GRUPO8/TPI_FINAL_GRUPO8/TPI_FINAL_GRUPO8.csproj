@@ -121,6 +121,7 @@
     <Content Include="Facturas.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="FormCliente.aspx" />
+    <Content Include="FormProveedor.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
@@ -220,6 +221,13 @@
     </Compile>
     <Compile Include="FormCliente.aspx.designer.cs">
       <DependentUpon>FormCliente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FormProveedor.aspx.cs">
+      <DependentUpon>FormProveedor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormProveedor.aspx.designer.cs">
+      <DependentUpon>FormProveedor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

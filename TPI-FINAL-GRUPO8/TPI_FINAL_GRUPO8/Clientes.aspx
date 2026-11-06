@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Clientes.aspx.cs" Inherits="TPI_FINAL_GRUPO8.Clientes" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2 class="text-center">Lista de Clientes</h2>
@@ -8,10 +9,9 @@
         <asp:TextBox ID="txtFiltro" runat="server" CssClass="form-control" placeholder="Buscar por DNI/CUIT..." AutoPostBack="true" OnTextChanged="txtFiltro_TextChanged"></asp:TextBox>
     </div>
 
-    <asp:GridView ID="gvClientes" runat="server" AutoGenerateColumns="false" 
-                CssClass="table table-striped" OnSelectedIndexChanged="gvClientes_SelectedIndexChanged"
-                DataKeyNames="Id"
-        >
+    <asp:GridView ID="gvClientes" runat="server" AutoGenerateColumns="false"
+        CssClass="table table-striped" OnSelectedIndexChanged="gvClientes_SelectedIndexChanged"
+        DataKeyNames="Id">
         <Columns>
             <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
             <asp:BoundField HeaderText="Apellido" DataField="Apellido" />

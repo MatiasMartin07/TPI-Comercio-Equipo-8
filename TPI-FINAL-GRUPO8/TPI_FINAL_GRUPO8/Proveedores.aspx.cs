@@ -13,13 +13,29 @@ namespace TPI_FINAL_GRUPO8
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (!IsPostBack)
-            //{
-            //    ProveedoresNegocio negocio = new ProveedoresNegocio();
-            //    List<Dominio.Proveedores> lista = negocio.Listar();
-            //    gvProveedores.DataSource = lista;
-            //    gvProveedores.DataBind();
-            //}
+            if (!IsPostBack)
+            {
+                ProveedoresNegocio negocio = new ProveedoresNegocio();
+                Session.Add("listaProveedores", negocio.Listar());
+                gvProveedores.DataSource = Session["listaProveedores"];
+                gvProveedores.DataBind();
+            }           
+        }
+        protected void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            List<Dominio.Proveedores> lista = (List<Dominio.Proveedores>)Session["listaProveedores"];
+            List<Dominio.Proveedores> listaFiltrada = lista.FindAll(x => x.RazonSocial.ToUpper().Contains(txtFiltro.Text.ToUpper()) || x.Cuit.ToUpper().Contains(txtFiltro.Text.ToUpper()));
+            gvProveedores.DataSource = listaFiltrada;
+            gvProveedores.DataBind();
+        }
+        protected void gvProveedores_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string id = gvProveedores.SelectedDataKey.Value.ToString();
+            Response.Redirect("FormProveedor.aspx?id=" + id);
+        }
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("FormProveedor.aspx", false);
         }
     }
 }

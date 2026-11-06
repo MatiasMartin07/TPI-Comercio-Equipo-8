@@ -11,6 +11,9 @@ namespace Dominio
         public int Id { get; set; }
         public string Codigo { get; set; }
         public string RazonSocial { get; set; }
+        public string Cuit { get; set; }
+        public string Telefono { get; set; }
+        public string Mail { get; set; }
         public bool Activo { get; set; }
     }
 }

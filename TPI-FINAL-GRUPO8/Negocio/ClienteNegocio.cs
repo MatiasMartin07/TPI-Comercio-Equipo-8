@@ -43,7 +43,6 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-
         public List<Cliente> filtrar(string filtro, string campo)
         {
             List<Cliente> lista = new List<Cliente>();
@@ -85,7 +84,6 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-
         public Cliente listarId(string id = "")
         {
             Cliente cliente = new Cliente();
@@ -117,7 +115,6 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-
         public void agregarCliente(Cliente cliente)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -138,9 +135,7 @@ namespace Negocio
             {
                 datos.cerrarConexion();
             }
-
         }
-
         public void modificarCliente(Cliente clienteM)
         {
             AccesoDatos datos = new AccesoDatos();
