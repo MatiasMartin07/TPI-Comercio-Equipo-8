@@ -151,10 +151,60 @@ CREATE TABLE Usuario (
     Activo BIT NOT NULL DEFAULT 1
 );
 
---INSERT INTO Usuario (Nombre, Apellido, NombreUsuario, Pass, Rol, Activo) 
---VALUES 
---('Carlos', 'Administrador', 'admin', '1234', 'Administrador', 1),
---('Lucía', 'Gómez', 'lgomez', 'abcd', 'Vendedor', 1),
---('Esteban', 'Pérez', 'eperez', 'clave123', 'Vendedor', 1),
---('Mariana', 'López', 'mlopez', 'pass456', 'Administrador', 1);
+insert into Usuario (Nombre, Apellido, NombreUsuario, Pass, Rol, Activo) 
+values ('Carlos', 'Administrador', 'admin', '1234', 'Administrador', 1),
+       ('Lucía', 'Gómez', 'lgomez', 'abcd', 'Vendedor', 1),
+       ('Esteban', 'Pérez', 'eperez', 'clave123', 'Vendedor', 1),
+       ('Mariana', 'López', 'mlopez', 'pass456', 'Administrador', 1);
 
+--procedimiento Usuario
+Create procedure sp_listaUsuario
+as 
+begin
+   Select Id,Nombre,Apellido,NombreUsuario,Pass,Rol,Activo 
+   from Usuario
+end
+
+Create procedure sp_listaUsuarioId
+@id int
+as
+begin
+     Select Id,Nombre,Apellido,NombreUsuario,Pass,Rol,Activo 
+     from Usuario
+     Where Id = @id
+end
+
+Create procedure sp_AgregarUsuario
+@nombre varchar(50),
+@apellido varchar (50),
+@nombreUsuario varchar(50),
+@pass varchar(100),
+@rol varchar(30)
+as
+begin
+  Insert into Usuario (Nombre,Apellido,NombreUsuario,Pass,Rol)
+  Values (@nombre,@apellido,@nombreUsuario,@pass,@rol)
+end
+
+Create procedure sp_ModificarUsuario
+@id int,
+@nombre varchar(50),
+@apellido varchar (50),
+@nombreUsuario varchar(50),
+@pass varchar(100),
+@rol varchar(30)
+as
+begin
+   update Usuario set Nombre = @nombre, Apellido = @apellido,
+   NombreUsuario=@nombreUsuario, Pass=@pass, Rol=@rol
+   where Id = @id
+end
+
+Create procedure sp_UsuarioExistente
+@nombreUsuario varchar(50)
+as
+begin
+   Select Id, Nombre,Apellido,NombreUsuario,Pass,Rol,Activo
+   from Usuario
+   where NombreUsuario = @nombreUsuario
+end

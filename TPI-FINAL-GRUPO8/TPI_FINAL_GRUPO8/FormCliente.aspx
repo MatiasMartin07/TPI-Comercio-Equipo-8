@@ -25,12 +25,12 @@
                 <div class="col">
                     <label class="form-label">Nombre</label>
                     <asp:TextBox ID="txtNombre" CssClass="form-control" placeholder="Nombre" runat="server" OnTextChanged="txtNombre_TextChanged" AutoPostBack="true" ></asp:TextBox>
-                    <asp:Label ID="lblErrorNombre" runat="server"></asp:Label>
+                    <asp:Label ID="lblErrorNombre" runat="server" CssClass="text-danger small"></asp:Label>
                 </div>
                 <div class="col">
                     <label class="form-label">Apellido</label>
                     <asp:TextBox ID="txtApellido" CssClass="form-control" placeholder="Apellido" runat="server" OnTextChanged="txtApellido_TextChanged" AutoPostBack="true"></asp:TextBox>
-                    <asp:Label ID="lblErrorApellido" runat="server"></asp:Label>
+                    <asp:Label ID="lblErrorApellido" runat="server" CssClass="text-danger small"></asp:Label>
 
                 </div>
             </div>
