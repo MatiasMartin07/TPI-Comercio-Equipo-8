@@ -87,6 +87,7 @@ namespace TPI_FINAL_GRUPO8
         {
             pnlConfirmarDesactivacion.Visible = false;
             btnDesactivar.Visible = true;
+            accionesGuardar.Visible = true;
         }
 
         protected void btnConfirmarDesactivacion_Click(object sender, EventArgs e)

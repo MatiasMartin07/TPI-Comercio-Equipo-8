@@ -142,6 +142,38 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+        public bool TieneProductosAsociados(int idMarca)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT IdProducto FROM Producto WHERE IdMarca = @IdMarca");
+                datos.setearParametro("@IdMarca", idMarca);
+                datos.ejecutarLectura();
+
+                return datos.Lector.Read();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void Eliminar(int idMarca)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("DELETE FROM Marca WHERE IdMarca = @IdMarca");
+                datos.setearParametro("@IdMarca", idMarca);
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 		
 }
