@@ -8,7 +8,7 @@
     <asp:GridView ID="gvCategorias" runat="server"
         AutoGenerateColumns="false"
         CssClass="table table-striped align-middle"
-        EmptyDataText="No hay categorías para mostrar.">
+        EmptyDataText="No hay categorías para mostrar." OnRowCommand="gvCategorias_RowCommand">
         <Columns>
             <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
             <asp:TemplateField HeaderText="Estado">
@@ -16,11 +16,51 @@
                     <%# (bool)Eval("Activo") ? "Activo" : "Inactivo" %>
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:HyperLinkField HeaderText="Acciones"
-                Text="Editar"
-                DataNavigateUrlFields="IdCategoria"
-                DataNavigateUrlFormatString="FormCategoria.aspx?id={0}"
-                ControlStyle-CssClass="btn btn-outline-primary btn-sm" />
+            <asp:TemplateField HeaderText="Acciones">
+                <ItemTemplate>
+                    <asp:HyperLink ID="lnkEditar" runat="server"
+                        Text="Editar"
+                        NavigateUrl='<%# Eval("IdCategoria", "FormCategoria.aspx?id={0}") %>'
+                        CssClass="btn btn-outline-primary btn-sm" />
+
+                    <asp:Button ID="btnEliminar" runat="server"
+                        Text="Eliminar"
+                        CssClass="btn btn-outline-danger btn-sm ms-3"
+                        CommandName="SolicitarEliminacion"
+                        CommandArgument='<%# Eval("IdCategoria") %>'
+                        CausesValidation="false" />
+                </ItemTemplate>
+            </asp:TemplateField>
         </Columns>
     </asp:GridView>
+    <asp:Panel ID="pnlConfirmarEliminacion" runat="server"
+    ClientIDMode="Static"
+    CssClass="modal fade"
+    Visible="false"
+    role="dialog"
+    aria-labelledby="tituloEliminar">
+
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="tituloEliminar" class="modal-title fs-5">Eliminar categoría</h2>
+            </div>
+
+            <div class="modal-body">
+                <asp:Label ID="lblConfirmacion" runat="server" />
+            </div>
+
+            <div class="modal-footer">
+                <asp:Button ID="btnConfirmarEliminacion" runat="server"
+                    Text="Aceptar"
+                    CssClass="btn btn-danger"
+                    CausesValidation="false"
+                     OnClick="btnConfirmarEliminacion_Click"/>
+
+                <button type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</asp:Panel>
 </asp:Content>

@@ -28,7 +28,7 @@ namespace TPI_FINAL_GRUPO8
 
                 CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
 
-                ddlCategoria.DataSource = categoriaNegocio.Listar();
+                ddlCategoria.DataSource = categoriaNegocio.Listar(incluirInactivas: true);
                 ddlCategoria.DataValueField = "IdCategoria";
                 ddlCategoria.DataTextField = "Nombre";
                 ddlCategoria.DataBind();

@@ -18,15 +18,44 @@
                     Display="Dynamic"
                     ValidationGroup="Categoria" />
             </div>
-            <div class="d-flex gap-2">
+            <div id="accionesGuardar" runat="server" class="d-flex gap-2">
                 <asp:Button ID="btnGuardar" runat="server"
                     Text="Guardar"
                     CssClass="btn btn-primary"
                     ValidationGroup="Categoria"
-                     OnClick="btnGuardar_Click"/>
-
+                    OnClick="btnGuardar_Click" />
                 <a href="Categorias.aspx" class="btn btn-secondary">Cancelar</a>
             </div>
+            <div class="mt-3">
+                <asp:Button ID="btnDesactivar" runat="server"
+                    Text="Desactivar categoría"
+                    CssClass="btn btn-outline-danger"
+                    CausesValidation="false"
+                    Visible="false"
+                     OnClick="btnDesactivar_Click"/>
+
+                <asp:Button ID="btnReactivar" runat="server"
+                    Text="Reactivar categoría"
+                    CssClass="btn btn-outline-success"
+                    CausesValidation="false"
+                    Visible="false"
+                    OnClick="btnReactivar_Click"/>
+            </div>
+            <asp:Panel ID="pnlConfirmarDesactivacion" runat="server"
+                CssClass="mt-3" Visible="false">
+                <p class="mb-2">¿De verdad querés desactivar esta categoría?</p>
+                <asp:Button ID="btnConfirmarDesactivacion" runat="server"
+                    Text="Sí, desactivar"
+                    CssClass="btn btn-danger"
+                    CausesValidation="false"
+                    OnClick="btnConfirmarDesactivacion_Click"/>
+
+                <asp:Button ID="btnCancelarDesactivacion" runat="server"
+                    Text="No, cancelar"
+                    CssClass="btn btn-outline-secondary"
+                    CausesValidation="false"
+                    OnClick="btnCancelarDesactivacion_Click" />
+            </asp:Panel>
         </div>
     </div>
 </asp:Content>
