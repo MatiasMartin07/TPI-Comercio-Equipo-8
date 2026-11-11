@@ -7,6 +7,7 @@
         <a href="FormProducto.aspx" class="btn btn-primary btn-sm">+ Nuevo producto
         </a>
     </div>
+    <div class="table-responsive">
     <asp:GridView ID="gvProductos" runat="server"
         AutoGenerateColumns="false" OnRowCommand="gvProductos_RowCommand"
         ShowHeaderWhenEmpty="true"
@@ -55,6 +56,7 @@
             </asp:TemplateField>
         </Columns>
     </asp:GridView>
+    </div>
     <asp:Panel ID="pnlConfirmarEliminacion" runat="server"
         ClientIDMode="Static"
         CssClass="modal fade"

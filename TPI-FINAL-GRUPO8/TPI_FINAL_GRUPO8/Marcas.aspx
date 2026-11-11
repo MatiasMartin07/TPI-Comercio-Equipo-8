@@ -12,6 +12,7 @@
         + Nueva marca
     </a>
 </div>
+    <div class="table-responsive">
     <asp:GridView ID="gvMarcas" runat="server"
         AutoGenerateColumns="false"
         ShowHeaderWhenEmpty="true"
@@ -42,6 +43,7 @@
             </asp:TemplateField>
         </Columns>
     </asp:GridView>
+    </div>
     <asp:Panel ID="pnlConfirmarEliminacion" runat="server"
         ClientIDMode="Static"
         CssClass="modal fade"
@@ -53,8 +55,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h2 id="tituloEliminar" class="modal-title fs-5">
-                        Eliminar marca
+                    <h2 id="tituloEliminar" class="modal-title fs-5">Eliminar marca
                     </h2>
                 </div>
 
@@ -67,13 +68,13 @@
                         Text="Aceptar"
                         CssClass="btn btn-danger"
                         CausesValidation="false"
-                        OnClick="btnConfirmarEliminacion_Click"/>
+                        OnClick="btnConfirmarEliminacion_Click" />
 
                     <asp:Button ID="btnCancelarEliminacion" runat="server"
                         Text="Cancelar"
                         CssClass="btn btn-secondary"
                         CausesValidation="false"
-                        OnClick="btnCancelarEliminacion_Click"/>
+                        OnClick="btnCancelarEliminacion_Click" />
                 </div>
 
             </div>
