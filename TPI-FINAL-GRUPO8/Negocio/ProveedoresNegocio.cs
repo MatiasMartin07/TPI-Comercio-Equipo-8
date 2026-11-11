@@ -24,17 +24,20 @@ namespace Negocio
                     aux.Id = (int)datos.Lector["IdProveedor"];
                     aux.Codigo = (string)datos.Lector["Codigo"];
                     aux.RazonSocial = (string)datos.Lector["RazonSocial"];
-                    aux.Cuit = (string)datos.Lector["CUIT"];
-                    aux.Telefono = (string)datos.Lector["Telefono"];
-                    aux.Mail = (string)datos.Lector["Mail"];
+                    aux.Cuit = datos.Lector["CUIT"] == DBNull.Value ? "" : datos.Lector["CUIT"].ToString();
+                    aux.Telefono = datos.Lector["Telefono"] == DBNull.Value ? "" : datos.Lector["Telefono"].ToString();
+                    aux.Mail = datos.Lector["Mail"] == DBNull.Value ? "" : datos.Lector["Mail"].ToString();
                     aux.Activo = (bool)datos.Lector["Activo"];
                     lista.Add(aux);
                 }
-                datos.cerrarConexion();
             }
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
             }
             return lista;
         }
@@ -54,9 +57,9 @@ namespace Negocio
                     proveedor.Id = (int)datos.Lector["IdProveedor"];
                     proveedor.Codigo = (string)datos.Lector["Codigo"];
                     proveedor.RazonSocial = (string)datos.Lector["RazonSocial"];
-                    proveedor.Cuit = (string)datos.Lector["CUIT"];
-                    proveedor.Telefono = (string)datos.Lector["Telefono"];
-                    proveedor.Mail = (string)datos.Lector["Mail"];
+                    proveedor.Cuit = datos.Lector["CUIT"] == DBNull.Value ? "" : datos.Lector["CUIT"].ToString();
+                    proveedor.Telefono = datos.Lector["Telefono"] == DBNull.Value ? "" : datos.Lector["Telefono"].ToString();
+                    proveedor.Mail = datos.Lector["Mail"] == DBNull.Value ? "" : datos.Lector["Mail"].ToString();
                     proveedor.Activo = (bool)datos.Lector["Activo"];
                 }
                 return proveedor;
@@ -81,7 +84,6 @@ namespace Negocio
                 datos.setearParametro("@Cuit", nuevo.Cuit);
                 datos.setearParametro("@Telefono", nuevo.Telefono);
                 datos.setearParametro("@Mail", nuevo.Mail);
-                datos.setearParametro("@Activo", nuevo.Activo);
 
                 return Convert.ToInt32(datos.ejecutarAccionEscalar());
             }
@@ -100,58 +102,33 @@ namespace Negocio
             try
             {
                 datos.setearProcedimiento("SP_ModificarProveedor");
+                datos.setearParametro("@IdProveedor", modificar.Id);
                 datos.setearParametro("@Codigo", modificar.Codigo);
                 datos.setearParametro("@RazonSocial", modificar.RazonSocial);
                 datos.setearParametro("@Cuit", modificar.Cuit);
                 datos.setearParametro("@Telefono", modificar.Telefono);
                 datos.setearParametro("@Mail", modificar.Mail);
-                datos.setearParametro("@Activo", modificar.Activo);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
 
-        }
-        public void eliminarLogico(int Id, bool Activo = false)
-        {
-            try
-            {
-                AccesoDatos datos = new AccesoDatos();
-
-                datos.setearConsulta("Update Proveedor set Activo = @activo where IdProveedor=@Id");
-                datos.setearParametro("@idProveedor", Id);
-                datos.setearParametro("@activo", Activo);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
-        public bool ExisteCod(string Codigo, int IdActual )
+        public void eliminarLogico(int Id)
         {
             AccesoDatos datos = new AccesoDatos();
+
             try
             {
-                datos.setearProcedimiento("spListaProveedor");
-                datos.setearParametro("@codigo", Codigo);
-
-                datos.ejecutarLectura();
-                if (datos.Lector.Read())
-                {
-                    int idEncontrado = (int)datos.Lector["IdProveedor"];
-                    if (IdActual != 0 && idEncontrado == IdActual)
-                    {
-                        return false;
-                    }
-                    return true;
-                }
-                return false;
+                datos.setearProcedimiento("SP_BajaProveedor");
+                datos.setearParametro("@IdProveedor", Id);
+                datos.ejecutarAccion();
             }
             catch (Exception ex)
             {
@@ -162,25 +139,39 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-        public bool ExisteCuit(string Cuit, int IdActual)
+        public bool ExisteCod(string codigo, int idActual)
         {
             AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("spBuscarPorCodigo");
+                datos.setearParametro("@Codigo", codigo.Trim());
+                datos.setearParametro("@IdActual", idActual);
+
+                object resultado = datos.ejecutarAccionEscalar();
+                return Convert.ToBoolean(resultado);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public bool ExisteCuit(string cuit, int idActual)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
             try
             {
                 datos.setearProcedimiento("spBuscarPorCuit");
-                datos.setearParametro("@cuit", Cuit);
+                datos.setearParametro("@CUIT", cuit.Trim());
+                datos.setearParametro("@IdActual", idActual);
 
-                datos.ejecutarLectura();
-                if (datos.Lector.Read())
-                {
-                    int idEncontrado = (int)datos.Lector["IdProveedor"];
-                    if (IdActual != 0 && idEncontrado == Convert.ToInt32(IdActual))
-                    {
-                        return false;
-                    }
-                    return true;
-                }
-                return false;
+                return Convert.ToBoolean(datos.ejecutarAccionEscalar());
             }
             catch (Exception ex)
             {
