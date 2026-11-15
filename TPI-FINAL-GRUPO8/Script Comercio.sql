@@ -1,9 +1,12 @@
+--- Creación BD---
 use master
 go
 create database COMERCIO_TP_FINAL
 go
 use COMERCIO_TP_FINAL
 go
+
+---Creacion tablas---
 
 CREATE TABLE Marca (
     IdMarca INT PRIMARY KEY IDENTITY(1,1),
@@ -37,8 +40,28 @@ CREATE TABLE Producto (
         FOREIGN KEY (IdCategoria) REFERENCES Categoria(IdCategoria)
 );
 
-select * from Producto
+create table Cliente(
+    Id int not null primary key identity(1,1),
+    Nombre varchar(50) not null,
+    Apellido varchar(50) not null,
+    Dni varchar(50) not null,
+    Email varchar(200) not null,
+    Activo Bit not null default 1
+);
 
+CREATE TABLE Usuario (
+    Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(50) NOT NULL,
+    Apellido VARCHAR(50) NOT NULL,
+    NombreUsuario VARCHAR(50) NOT NULL UNIQUE,
+    Pass VARCHAR(100) NOT NULL,
+    Rol VARCHAR(30) NOT NULL,
+    Activo BIT NOT NULL DEFAULT 1
+);
+
+
+
+---Carga de datos---
 INSERT INTO Marca (Nombre)
 VALUES ('Cabrales'),
        ('La Serenísima'),
@@ -68,27 +91,22 @@ VALUES
 GO
 
 
-select * from Producto;
-go
-create table Cliente(
-    Id int not null primary key identity(1,1),
-    Nombre varchar(50) not null,
-    Apellido varchar(50) not null,
-    Dni varchar(50) not null,
-    Email varchar(200) not null,
-    Activo Bit not null default 1
-)
-
 INSERT INTO Cliente (Nombre, Apellido,Dni,Email,Activo) 
 VALUES 
 ('Juan', 'Pérez','32456711','juanperez@gmail.com', 1),
 ('María', 'Gómez','37980100','gomez@maria.gmail.com', 1),
 ('Carlos', 'Rodríguez','29341678','rodriguezcarlos@gmail.com',1),
 ('Ana', 'Martínez','27900243','ana@gmail.com',1);
-
-select * from Cliente
-
 go
+
+--INSERT INTO Usuario (Nombre, Apellido, NombreUsuario, Pass, Rol, Activo)
+--VALUES
+--('Carlos', 'Administrador', 'admin', '1234', 'Administrador', 1),
+--('Lucía', 'Gómez', 'lgomez', 'abcd', 'Vendedor', 1),
+--('Esteban', 'Pérez', 'eperez', 'clave123', 'Vendedor', 1),
+--('Mariana', 'López', 'mlopez', 'pass456', 'Administrador', 1);
+
+
 --Procedimiento Almacenado---
 Create Procedure spListaCliente
 AS
@@ -97,7 +115,6 @@ BEGIN
     FROM Cliente
 END
 go
---Exec spListaCliente
 
 Create Procedure spListaClienteId
 @id int
@@ -107,6 +124,7 @@ BEGIN
     FROM Cliente where Id=@id
 END
 go
+
 Create Procedure spAltaCliente
     @nombre varchar(50),
     @apellido varchar(50),
@@ -118,7 +136,6 @@ Create Procedure spAltaCliente
        values (@nombre,@apellido,@dni,@email,1)
     end
 go
---exec spAltaCliente 'Peter', 'Parker','21900211','parkerpeter@gmail.com'
 
 Create procedure spModificarCliente
     @id int,
@@ -133,6 +150,7 @@ Create procedure spModificarCliente
        where Id = @id
     end
 go
+
 Create procedure spListaClienteDni
 @dni varchar(50)
 AS
@@ -142,25 +160,69 @@ BEGIN
 END
 go
 
+-- Procedimientos de Usuarios
 
-CREATE TABLE Usuario (
-    Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    Nombre VARCHAR(50) NOT NULL,
-    Apellido VARCHAR(50) NOT NULL,
-    NombreUsuario VARCHAR(50) NOT NULL UNIQUE, 
-    Pass VARCHAR(100) NOT NULL,
-    Rol VARCHAR(30) NOT NULL,                
-    Activo BIT NOT NULL DEFAULT 1
-);
+CREATE PROCEDURE sp_ListaUsuario
+AS
+BEGIN
+    SELECT Id, Nombre, Apellido, NombreUsuario, Pass, Rol, Activo
+    FROM Usuario;
+END;
+GO
 
---INSERT INTO Usuario (Nombre, Apellido, NombreUsuario, Pass, Rol, Activo) 
---VALUES 
---('Carlos', 'Administrador', 'admin', '1234', 'Administrador', 1),
---('Lucía', 'Gómez', 'lgomez', 'abcd', 'Vendedor', 1),
---('Esteban', 'Pérez', 'eperez', 'clave123', 'Vendedor', 1),
---('Mariana', 'López', 'mlopez', 'pass456', 'Administrador', 1);
+CREATE PROCEDURE sp_listaUsuarioId
+    @id INT
+AS
+BEGIN
+    SELECT Id, Nombre, Apellido, NombreUsuario, Pass, Rol, Activo
+    FROM Usuario
+    WHERE Id = @id;
+END;
+GO
 
-go
+CREATE PROCEDURE sp_AgregarUsuario
+    @nombre VARCHAR(50),
+    @apellido VARCHAR(50),
+    @nombreUsuario VARCHAR(50),
+    @pass VARCHAR(100),
+    @rol VARCHAR(30)
+AS
+BEGIN
+    INSERT INTO Usuario (Nombre, Apellido, NombreUsuario, Pass, Rol)
+    VALUES (@nombre, @apellido, @nombreUsuario, @pass, @rol);
+END;
+GO
+
+CREATE PROCEDURE sp_ModificarUsuario
+    @id INT,
+    @nombre VARCHAR(50),
+    @apellido VARCHAR(50),
+    @nombreUsuario VARCHAR(50),
+    @pass VARCHAR(100),
+    @rol VARCHAR(30)
+AS
+BEGIN
+    UPDATE Usuario
+    SET Nombre = @nombre,
+        Apellido = @apellido,
+        NombreUsuario = @nombreUsuario,
+        Pass = @pass,
+        Rol = @rol
+    WHERE Id = @id;
+END;
+GO
+
+CREATE PROCEDURE sp_UsuarioExistente
+    @nombreUsuario VARCHAR(50)
+AS
+BEGIN
+    SELECT Id, Nombre, Apellido, NombreUsuario, Pass, Rol, Activo
+    FROM Usuario
+    WHERE NombreUsuario = @nombreUsuario;
+END;
+GO
+
+-- Proveedores
 create table Proveedor(
 IdProveedor INT PRIMARY KEY IDENTITY(1,1),
 Codigo VARCHAR(50) UNIQUE NOT NULL,
@@ -171,9 +233,6 @@ Mail VARCHAR(50),
 Activo BIT NOT NULL
     CONSTRAINT DF_Proveedor_Activo DEFAULT (1)
 );
-GO
-Insert into Proveedor (Codigo,RazonSocial,CUIT,Telefono,Mail)
-values ('M1020', 'Dos Anclas', '20123456789', '1145678855', 'dosanclas@gmail.com')
 GO
 Create Procedure spListaProveedor
 AS
@@ -275,4 +334,3 @@ BEGIN
     ) AS Existe;
 END
 GO
-
