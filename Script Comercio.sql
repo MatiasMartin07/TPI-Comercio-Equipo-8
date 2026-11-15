@@ -159,3 +159,65 @@ BEGIN
     FROM Cliente where Dni=@dni
 END
 go
+
+-- Procedimientos de Usuarios
+
+CREATE PROCEDURE sp_ListaUsuario
+AS
+BEGIN
+    SELECT Id, Nombre, Apellido, NombreUsuario, Pass, Rol, Activo
+    FROM Usuario;
+END;
+GO
+
+CREATE PROCEDURE sp_listaUsuarioId
+    @id INT
+AS
+BEGIN
+    SELECT Id, Nombre, Apellido, NombreUsuario, Pass, Rol, Activo
+    FROM Usuario
+    WHERE Id = @id;
+END;
+GO
+
+CREATE PROCEDURE sp_AgregarUsuario
+    @nombre VARCHAR(50),
+    @apellido VARCHAR(50),
+    @nombreUsuario VARCHAR(50),
+    @pass VARCHAR(100),
+    @rol VARCHAR(30)
+AS
+BEGIN
+    INSERT INTO Usuario (Nombre, Apellido, NombreUsuario, Pass, Rol)
+    VALUES (@nombre, @apellido, @nombreUsuario, @pass, @rol);
+END;
+GO
+
+CREATE PROCEDURE sp_ModificarUsuario
+    @id INT,
+    @nombre VARCHAR(50),
+    @apellido VARCHAR(50),
+    @nombreUsuario VARCHAR(50),
+    @pass VARCHAR(100),
+    @rol VARCHAR(30)
+AS
+BEGIN
+    UPDATE Usuario
+    SET Nombre = @nombre,
+        Apellido = @apellido,
+        NombreUsuario = @nombreUsuario,
+        Pass = @pass,
+        Rol = @rol
+    WHERE Id = @id;
+END;
+GO
+
+CREATE PROCEDURE sp_UsuarioExistente
+    @nombreUsuario VARCHAR(50)
+AS
+BEGIN
+    SELECT Id, Nombre, Apellido, NombreUsuario, Pass, Rol, Activo
+    FROM Usuario
+    WHERE NombreUsuario = @nombreUsuario;
+END;
+GO
