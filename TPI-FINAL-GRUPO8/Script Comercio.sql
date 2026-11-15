@@ -59,6 +59,18 @@ CREATE TABLE Usuario (
     Activo BIT NOT NULL DEFAULT 1
 );
 
+create table Proveedor(
+IdProveedor INT PRIMARY KEY IDENTITY(1,1),
+Codigo VARCHAR(50) UNIQUE NOT NULL,
+RazonSocial VARCHAR(100) NOT NULL,
+CUIT VARCHAR(20),
+Telefono VARCHAR(20),
+Mail VARCHAR(50),
+Activo BIT NOT NULL
+    CONSTRAINT DF_Proveedor_Activo DEFAULT (1)
+);
+GO
+
 
 
 ---Carga de datos---
@@ -223,17 +235,7 @@ END;
 GO
 
 -- Proveedores
-create table Proveedor(
-IdProveedor INT PRIMARY KEY IDENTITY(1,1),
-Codigo VARCHAR(50) UNIQUE NOT NULL,
-RazonSocial VARCHAR(100) NOT NULL,
-CUIT VARCHAR(20),
-Telefono VARCHAR(20),
-Mail VARCHAR(50),
-Activo BIT NOT NULL
-    CONSTRAINT DF_Proveedor_Activo DEFAULT (1)
-);
-GO
+
 Create Procedure spListaProveedor
 AS
 BEGIN
@@ -241,7 +243,8 @@ BEGIN
     FROM Proveedor
 END
 GO
---1 SP Para agregar Proveedor
+
+
 Create PROCEDURE SP_AgregarProveedor
     @Codigo VARCHAR(50),
     @RazonSocial VARCHAR(100),
@@ -255,7 +258,8 @@ BEGIN
     SELECT CONVERT(INT, SCOPE_IDENTITY()) AS IdProveedor;
 END
 GO
--- 2 SP Para modificar el proveedor 
+
+
 CREATE PROCEDURE SP_ModificarProveedor
     @IdProveedor INT,
     @Codigo VARCHAR(50),
@@ -275,7 +279,7 @@ BEGIN
 END
 GO
 
--- 3 SP para la baja logica
+
 CREATE PROCEDURE SP_BajaProveedor
     @IdProveedor INT
 AS
@@ -285,7 +289,8 @@ BEGIN
     WHERE IdProveedor = @IdProveedor;
 END
 go
---
+
+
 Create Procedure spListaIDProveedor
 @idProveedor int
 AS
@@ -294,7 +299,8 @@ BEGIN
     FROM Proveedor where IdProveedor=@idProveedor
 END
 GO
---SP Para buscar por cuit
+
+
 CREATE PROCEDURE spBuscarPorCuit
     @CUIT VARCHAR(20),
     @IdActual INT
@@ -314,8 +320,7 @@ BEGIN
     ) AS Existe;
 END
 GO
---
---SP Para buscar por codigo
+
 Create Procedure spBuscarPorCodigo
     @Codigo VARCHAR(50),
     @IdActual Int
