@@ -2,47 +2,51 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Label ID="lblError" runat="server"
-    CssClass="text-danger d-block"
-    role="alert" />
+        CssClass="text-danger d-block"
+        role="alert" />
 
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 bg-light border border-bottom-0 rounded-top px-3 py-2">
-    <h1 class="h4 mb-0">Lista de marcas</h1>
-
-    <a href="FormMarca.aspx" class="btn btn-primary btn-sm">
-        + Nueva marca
-    </a>
-</div>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 bg-light border border-bottom-0 rounded-top px-3 py-2">
+        <h1 class="h4 mb-0">Lista de marcas</h1>
+        <a href="FormMarca.aspx" class="btn btn-primary btn-sm">+ Nueva marca</a>
+    </div>
+    <div class="mb-3 mt-3">
+        <asp:Label runat="server" AssociatedControlID="txtFiltroMarca"
+            CssClass="form-label" Text="Buscar por nombre" />
+        <asp:TextBox ID="txtFiltroMarca" runat="server"
+            CssClass="form-control" AutoPostBack="true"
+            OnTextChanged="txtFiltroMarca_TextChanged" />
+    </div>
     <div class="table-responsive">
-    <asp:GridView ID="gvMarcas" runat="server"
-        AutoGenerateColumns="false"
-        ShowHeaderWhenEmpty="true"
-        CssClass="table table-striped align-middle"
-        EmptyDataText="No hay marcas para mostrar."
-         OnRowCommand="gvMarcas_RowCommand">
-        <Columns>
-            <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
-            <asp:TemplateField HeaderText="Estado">
-                <ItemTemplate>
-                    <%# (bool)Eval("Activo") ? "Activo" : "Inactivo" %>
-                </ItemTemplate>
-            </asp:TemplateField>
-            <asp:TemplateField HeaderText="Acciones">
-                <ItemTemplate>
-                    <asp:HyperLink ID="lnkEditar" runat="server"
-                        Text="Editar"
-                        NavigateUrl='<%# Eval("IdMarca", "FormMarca.aspx?id={0}") %>'
-                        CssClass="btn btn-outline-primary btn-sm" />
+        <asp:GridView ID="gvMarcas" runat="server"
+            AutoGenerateColumns="false"
+            ShowHeaderWhenEmpty="true"
+            CssClass="table table-striped align-middle"
+            EmptyDataText="No hay marcas para mostrar."
+            OnRowCommand="gvMarcas_RowCommand">
+            <Columns>
+                <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                <asp:TemplateField HeaderText="Estado">
+                    <ItemTemplate>
+                        <%# (bool)Eval("Activo") ? "Activo" : "Inactivo" %>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Acciones">
+                    <ItemTemplate>
+                        <asp:HyperLink ID="lnkEditar" runat="server"
+                            Text="Editar"
+                            NavigateUrl='<%# Eval("IdMarca", "FormMarca.aspx?id={0}") %>'
+                            CssClass="btn btn-outline-primary btn-sm" />
 
-                    <asp:Button ID="btnEliminar" runat="server"
-                        Text="Eliminar"
-                        CssClass="btn btn-outline-danger btn-sm ms-3"
-                        CommandName="SolicitarEliminacion"
-                        CommandArgument='<%# Eval("IdMarca") %>'
-                        CausesValidation="false" />
-                </ItemTemplate>
-            </asp:TemplateField>
-        </Columns>
-    </asp:GridView>
+                        <asp:Button ID="btnEliminar" runat="server"
+                            Text="Eliminar"
+                            CssClass="btn btn-outline-danger btn-sm ms-3"
+                            CommandName="SolicitarEliminacion"
+                            CommandArgument='<%# Eval("IdMarca") %>'
+                            CausesValidation="false" />
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
     </div>
     <asp:Panel ID="pnlConfirmarEliminacion" runat="server"
         ClientIDMode="Static"

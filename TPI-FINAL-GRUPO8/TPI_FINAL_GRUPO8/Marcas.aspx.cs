@@ -14,10 +14,29 @@ namespace TPI_FINAL_GRUPO8
         {
             if (!IsPostBack)
             {
-                MarcaNegocio negocio = new MarcaNegocio();
-                gvMarcas.DataSource = negocio.Listar();
-                gvMarcas.DataBind();
+                CargarMarcas();
             }
+        }
+
+        protected void txtFiltroMarca_TextChanged(object sender, EventArgs e)
+        {
+            CargarMarcas();
+        }
+
+        private void CargarMarcas()
+        {
+            MarcaNegocio negocio = new MarcaNegocio();
+            var marcas = negocio.Listar();
+            string filtro = txtFiltroMarca.Text.Trim();
+
+            if (filtro.Length > 0)
+            {
+                marcas = marcas.FindAll(marca =>
+                    marca.Nombre.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+
+            gvMarcas.DataSource = marcas;
+            gvMarcas.DataBind();
         }
 
         protected void gvMarcas_RowCommand(object sender, GridViewCommandEventArgs e)
