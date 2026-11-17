@@ -14,10 +14,31 @@ namespace TPI_FINAL_GRUPO8
         {
             if (!IsPostBack)
             {
-                CategoriaNegocio negocio = new CategoriaNegocio();
-                gvCategorias.DataSource = negocio.Listar(incluirInactivas: true);
-                gvCategorias.DataBind();
+                CargarCategorias();
             }
+        }
+
+        protected void txtFiltroCategoria_TextChanged(object sender, EventArgs e) {
+            CargarCategorias();
+        }
+
+        private void CargarCategorias()
+        {
+            CategoriaNegocio negocio = new CategoriaNegocio();
+            var categorias = negocio.Listar(incluirInactivas: true);
+            string filtro = txtFiltroCategoria.Text.Trim();
+            bool hayCategorias = categorias.Count > 0;
+
+            if (filtro.Length > 0)
+            {
+                categorias = categorias.FindAll(categoria =>
+                    categoria.Nombre.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+
+            gvCategorias.EmptyDataText = hayCategorias && filtro.Length > 0 ? "No se encontraron categorías con esa búsqueda." : "No hay categorías para mostrar.";
+
+            gvCategorias.DataSource = categorias;
+            gvCategorias.DataBind();
         }
 
         protected void gvCategorias_RowCommand(object sender, GridViewCommandEventArgs e)

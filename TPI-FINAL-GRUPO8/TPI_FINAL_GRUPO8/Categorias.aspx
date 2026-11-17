@@ -5,11 +5,23 @@
         <h1 class="h4 mb-0">Lista de categorías</h1>
         <a href="FormCategoria.aspx" class="btn btn-primary btn-sm">+ Nueva categoría</a>
     </div>
-    <div class="table-responsive">
+        <div class="border border-bottom-0 bg-white px-3 py-2">
+        <asp:Label runat="server" AssociatedControlID="txtFiltroCategoria"
+            CssClass="visually-hidden" Text="Buscar por nombre" />
+        <asp:TextBox ID="txtFiltroCategoria" runat="server"
+            CssClass="form-control form-control-sm"
+            Style="max-width: 240px;"
+            placeholder="Buscar por nombre"
+            AutoPostBack="true"
+            OnTextChanged="txtFiltroCategoria_TextChanged" />
+    </div>
+    <div class="table-responsive border rounded-bottom categorias-listado">
         <asp:GridView ID="gvCategorias" runat="server"
             AutoGenerateColumns="false"
+            ShowHeaderWhenEmpty="true"
             CssClass="table table-striped align-middle"
             EmptyDataText="No hay categorías para mostrar." OnRowCommand="gvCategorias_RowCommand">
+            <EmptyDataRowStyle CssClass="categorias-vacias" />
             <Columns>
                 <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
                 <asp:TemplateField HeaderText="Estado">

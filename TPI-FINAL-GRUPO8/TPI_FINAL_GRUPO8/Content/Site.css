@@ -19,3 +19,29 @@ textarea {
         padding: 0;
     }
 }
+
+main:has(> div > .categorias-listado),
+main > div:has(> .categorias-listado) {
+    display: flex;
+    flex-direction: column;
+}
+
+main:has(> div > .categorias-listado) {
+    padding-bottom: 1rem !important;
+}
+
+main > div:has(> .categorias-listado),
+.categorias-listado {
+    flex-grow: 1;
+}
+
+.categorias-listado {
+    min-height: 226px;
+}
+
+.table > tbody > .categorias-vacias > td {
+    padding: 2.5rem 0.75rem;
+    text-align: center;
+    color: #6c757d;
+    border-bottom: 0;
+}
