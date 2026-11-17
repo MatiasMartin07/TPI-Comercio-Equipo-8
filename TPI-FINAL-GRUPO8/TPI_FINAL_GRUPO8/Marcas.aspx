@@ -9,20 +9,24 @@
         <h1 class="h4 mb-0">Lista de marcas</h1>
         <a href="FormMarca.aspx" class="btn btn-primary btn-sm">+ Nueva marca</a>
     </div>
-    <div class="mb-3 mt-3">
+    <div class="border border-bottom-0 bg-white px-3 py-2">
         <asp:Label runat="server" AssociatedControlID="txtFiltroMarca"
-            CssClass="form-label" Text="Buscar por nombre" />
+            CssClass="visually-hidden" Text="Buscar por nombre" />
         <asp:TextBox ID="txtFiltroMarca" runat="server"
-            CssClass="form-control" AutoPostBack="true"
+            CssClass="form-control form-control-sm"
+            Style="max-width: 240px;"
+            placeholder="Buscar por nombre"
+            AutoPostBack="true"
             OnTextChanged="txtFiltroMarca_TextChanged" />
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive border rounded-bottom listado-catalogo">
         <asp:GridView ID="gvMarcas" runat="server"
             AutoGenerateColumns="false"
             ShowHeaderWhenEmpty="true"
             CssClass="table table-striped align-middle"
             EmptyDataText="No hay marcas para mostrar."
             OnRowCommand="gvMarcas_RowCommand">
+            <EmptyDataRowStyle CssClass="listado-sin-resultados" />
             <Columns>
                 <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
                 <asp:TemplateField HeaderText="Estado">

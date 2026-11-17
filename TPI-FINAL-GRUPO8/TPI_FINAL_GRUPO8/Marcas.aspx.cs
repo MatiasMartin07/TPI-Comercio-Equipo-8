@@ -28,12 +28,15 @@ namespace TPI_FINAL_GRUPO8
             MarcaNegocio negocio = new MarcaNegocio();
             var marcas = negocio.Listar();
             string filtro = txtFiltroMarca.Text.Trim();
+            bool hayMarcas = marcas.Count > 0;
 
             if (filtro.Length > 0)
             {
                 marcas = marcas.FindAll(marca =>
                     marca.Nombre.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0);
             }
+
+            gvMarcas.EmptyDataText = hayMarcas && filtro.Length > 0 ? "No se encontraron marcas con esa búsqueda." : "No hay marcas para mostrar.";
 
             gvMarcas.DataSource = marcas;
             gvMarcas.DataBind();

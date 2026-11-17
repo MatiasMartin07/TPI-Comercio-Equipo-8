@@ -20,26 +20,26 @@ textarea {
     }
 }
 
-main:has(> div > .categorias-listado),
-main > div:has(> .categorias-listado) {
+main:has(> div > .listado-catalogo),
+main > div:has(> .listado-catalogo) {
     display: flex;
     flex-direction: column;
 }
 
-main:has(> div > .categorias-listado) {
+main:has(> div > .listado-catalogo) {
     padding-bottom: 1rem !important;
 }
 
-main > div:has(> .categorias-listado),
-.categorias-listado {
+main > div:has(> .listado-catalogo),
+.listado-catalogo {
     flex-grow: 1;
 }
 
-.categorias-listado {
+.listado-catalogo {
     min-height: 226px;
 }
 
-.table > tbody > .categorias-vacias > td {
+.table > tbody > .listado-sin-resultados > td {
     padding: 2.5rem 0.75rem;
     text-align: center;
     color: #6c757d;

@@ -15,13 +15,13 @@
             AutoPostBack="true"
             OnTextChanged="txtFiltroCategoria_TextChanged" />
     </div>
-    <div class="table-responsive border rounded-bottom categorias-listado">
+    <div class="table-responsive border rounded-bottom listado-catalogo">
         <asp:GridView ID="gvCategorias" runat="server"
             AutoGenerateColumns="false"
             ShowHeaderWhenEmpty="true"
             CssClass="table table-striped align-middle"
             EmptyDataText="No hay categorías para mostrar." OnRowCommand="gvCategorias_RowCommand">
-            <EmptyDataRowStyle CssClass="categorias-vacias" />
+            <EmptyDataRowStyle CssClass="listado-sin-resultados" />
             <Columns>
                 <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
                 <asp:TemplateField HeaderText="Estado">
