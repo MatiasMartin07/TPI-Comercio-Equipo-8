@@ -7,12 +7,23 @@
         <a href="FormProducto.aspx" class="btn btn-primary btn-sm">+ Nuevo producto
         </a>
     </div>
-    <div class="table-responsive">
+       <div class="border border-bottom-0 bg-white px-3 py-2">
+        <asp:Label runat="server" AssociatedControlID="txtFiltroProducto"
+            CssClass="visually-hidden" Text="Buscar por nombre,marca o categoría" />
+        <asp:TextBox ID="txtFiltroProducto" runat="server"
+            CssClass="form-control form-control-sm"
+            Style="max-width: 240px;"
+            placeholder="Buscar por nombre,marca o categoría"
+            AutoPostBack="true"
+            OnTextChanged="txtFiltroProducto_TextChanged" />
+    </div>
+    <div class="table-responsive border rounded-bottom listado-catalogo">
     <asp:GridView ID="gvProductos" runat="server"
         AutoGenerateColumns="false" OnRowCommand="gvProductos_RowCommand"
         ShowHeaderWhenEmpty="true"
         CssClass="table table-striped align-middle"
         EmptyDataText="No hay productos para mostrar.">
+        <EmptyDataRowStyle CssClass="listado-sin-resultados" />
         <Columns>
             <%--<asp:BoundField DataField="IdProducto" HeaderText="ID" />--%>
             <asp:BoundField DataField="Nombre" HeaderText="Nombre" />

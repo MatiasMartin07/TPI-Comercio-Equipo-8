@@ -14,10 +14,36 @@ namespace TPI_FINAL_GRUPO8
         {
             if (!IsPostBack)
             {
-                ProductoNegocio negocio = new ProductoNegocio();
-                gvProductos.DataSource = negocio.Listar();
-                gvProductos.DataBind();
+                CargarProductos();
             }
+        }
+
+        protected void txtFiltroProducto_TextChanged(object sender, EventArgs e)
+        {
+            CargarProductos();
+        }
+
+        private void CargarProductos()
+        {
+            ProductoNegocio negocio = new ProductoNegocio();
+            var productos = negocio.Listar();
+            string filtro = txtFiltroProducto.Text.Trim();
+            bool hayProductos = productos.Count > 0;
+
+            if (filtro.Length > 0)
+            {
+                productos = productos.FindAll(producto =>
+                producto.Nombre.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                producto.Marca.Nombre.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                producto.Categoria.Nombre.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+
+            gvProductos.EmptyDataText = hayProductos && filtro.Length > 0
+                ? "No se encontraron productos con esa búsqueda."
+                : "No hay productos para mostrar.";
+
+            gvProductos.DataSource = productos;
+            gvProductos.DataBind();
         }
         protected void gvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
