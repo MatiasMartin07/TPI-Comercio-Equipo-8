@@ -9,7 +9,7 @@
         <h1 class="h4 mb-0">Lista de marcas</h1>
         <a href="FormMarca.aspx" class="btn btn-primary btn-sm">+ Nueva marca</a>
     </div>
-    <div class="border border-bottom-0 bg-white px-3 py-2">
+    <div class="d-flex flex-wrap align-items-center gap-2 border border-bottom-0 bg-white px-3 py-2">
         <asp:Label runat="server" AssociatedControlID="txtFiltroMarca"
             CssClass="visually-hidden" Text="Buscar por nombre" />
         <asp:TextBox ID="txtFiltroMarca" runat="server"
@@ -18,6 +18,18 @@
             placeholder="Buscar por nombre"
             AutoPostBack="true"
             OnTextChanged="txtFiltroMarca_TextChanged" />
+
+        <asp:Label runat="server" AssociatedControlID="ddlEstadoMarca"
+            CssClass="visually-hidden" Text="Filtrar por estado" />
+        <asp:DropDownList ID="ddlEstadoMarca" runat="server"
+            CssClass="form-select form-select-sm"
+            Style="max-width: 150px;"
+            AutoPostBack="true"
+            OnSelectedIndexChanged="ddlEstadoMarca_SelectedIndexChanged">
+            <asp:ListItem Text="Todos" Value="todos" />
+            <asp:ListItem Text="Activos" Value="activos" />
+            <asp:ListItem Text="Inactivos" Value="inactivos" />
+        </asp:DropDownList>
     </div>
     <div class="table-responsive border rounded-bottom listado-catalogo">
         <asp:GridView ID="gvMarcas" runat="server"

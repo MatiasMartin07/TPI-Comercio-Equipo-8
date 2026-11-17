@@ -33,6 +33,15 @@ namespace TPI_FINAL_GRUPO8
         protected global::System.Web.UI.WebControls.TextBox txtFiltroMarca;
 
         /// <summary>
+        /// ddlEstadoMarca control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlEstadoMarca;
+
+        /// <summary>
         /// gvMarcas control.
         /// </summary>
         /// <remarks>
