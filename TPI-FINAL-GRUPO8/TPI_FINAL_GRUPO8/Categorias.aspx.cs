@@ -22,12 +22,19 @@ namespace TPI_FINAL_GRUPO8
             CargarCategorias();
         }
 
+        protected void ddlEstadoCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CargarCategorias();
+        }
+
         private void CargarCategorias()
         {
             CategoriaNegocio negocio = new CategoriaNegocio();
             var categorias = negocio.Listar(incluirInactivas: true);
             string filtro = txtFiltroCategoria.Text.Trim();
+            string estado = ddlEstadoCategoria.SelectedValue;
             bool hayCategorias = categorias.Count > 0;
+            bool filtrarEstado = estado != "todos";
 
             if (filtro.Length > 0)
             {
@@ -35,7 +42,15 @@ namespace TPI_FINAL_GRUPO8
                     categoria.Nombre.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0);
             }
 
-            gvCategorias.EmptyDataText = hayCategorias && filtro.Length > 0 ? "No se encontraron categorías con esa búsqueda." : "No hay categorías para mostrar.";
+            if (filtrarEstado)
+            {
+                bool mostrarActivas = estado == "activos";
+                categorias = categorias.FindAll(categoria => categoria.Activo == mostrarActivas);
+            }
+
+            gvCategorias.EmptyDataText = hayCategorias && (filtro.Length > 0 || filtrarEstado)
+                ? "No se encontraron categorías con los filtros seleccionados."
+                : "No hay categorías para mostrar.";
 
             gvCategorias.DataSource = categorias;
             gvCategorias.DataBind();

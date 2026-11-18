@@ -5,7 +5,7 @@
         <h1 class="h4 mb-0">Lista de categorías</h1>
         <a href="FormCategoria.aspx" class="btn btn-primary btn-sm">+ Nueva categoría</a>
     </div>
-        <div class="border border-bottom-0 bg-white px-3 py-2">
+    <div class="d-flex flex-wrap align-items-center gap-2 border border-bottom-0 bg-white px-3 py-2">
         <asp:Label runat="server" AssociatedControlID="txtFiltroCategoria"
             CssClass="visually-hidden" Text="Buscar por nombre" />
         <asp:TextBox ID="txtFiltroCategoria" runat="server"
@@ -14,6 +14,18 @@
             placeholder="Buscar por nombre"
             AutoPostBack="true"
             OnTextChanged="txtFiltroCategoria_TextChanged" />
+
+        <asp:Label runat="server" AssociatedControlID="ddlEstadoCategoria"
+            CssClass="visually-hidden" Text="Filtrar por estado" />
+        <asp:DropDownList ID="ddlEstadoCategoria" runat="server"
+            CssClass="form-select form-select-sm"
+            Style="max-width: 150px;"
+            AutoPostBack="true"
+            OnSelectedIndexChanged="ddlEstadoCategoria_SelectedIndexChanged">
+            <asp:ListItem Text="Todos" Value="todos" />
+            <asp:ListItem Text="Activos" Value="activos" />
+            <asp:ListItem Text="Inactivos" Value="inactivos" />
+        </asp:DropDownList>
     </div>
     <div class="table-responsive border rounded-bottom listado-catalogo">
         <asp:GridView ID="gvCategorias" runat="server"
