@@ -23,23 +23,36 @@ namespace TPI_FINAL_GRUPO8
             CargarProductos();
         }
 
+        protected void ddlEstadoProducto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CargarProductos();
+        }
+
         private void CargarProductos()
         {
             ProductoNegocio negocio = new ProductoNegocio();
             var productos = negocio.Listar();
             string filtro = txtFiltroProducto.Text.Trim();
+            string estado = ddlEstadoProducto.SelectedValue;
             bool hayProductos = productos.Count > 0;
+            bool filtrarEstado = estado != "todos";
 
             if (filtro.Length > 0)
             {
                 productos = productos.FindAll(producto =>
-                producto.Nombre.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                producto.Marca.Nombre.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                producto.Categoria.Nombre.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0);
+                    producto.Nombre.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    producto.Marca.Nombre.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    producto.Categoria.Nombre.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0);
             }
 
-            gvProductos.EmptyDataText = hayProductos && filtro.Length > 0
-                ? "No se encontraron productos con esa búsqueda."
+            if (filtrarEstado)
+            {
+                bool mostrarActivos = estado == "activos";
+                productos = productos.FindAll(producto => producto.Activo == mostrarActivos);
+            }
+
+            gvProductos.EmptyDataText = hayProductos && (filtro.Length > 0 || filtrarEstado)
+                ? "No se encontraron productos con los filtros seleccionados."
                 : "No hay productos para mostrar.";
 
             gvProductos.DataSource = productos;
