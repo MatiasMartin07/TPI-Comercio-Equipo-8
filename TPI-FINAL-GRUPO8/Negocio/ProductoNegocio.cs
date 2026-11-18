@@ -220,21 +220,6 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-        public void Eliminar(int idProducto)
-        {
-            AccesoDatos datos = new AccesoDatos();
-
-            try
-            {
-                datos.setearConsulta("DELETE FROM dbo.Producto WHERE IdProducto = @IdProducto");
-
-                datos.setearParametro("@IdProducto", idProducto);
-                datos.ejecutarAccion();
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
+        
     }
 }

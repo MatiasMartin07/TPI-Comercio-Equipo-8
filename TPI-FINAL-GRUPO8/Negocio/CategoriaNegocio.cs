@@ -125,38 +125,6 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-        public bool TieneProductosAsociados(int idCategoria)
-        {
-            AccesoDatos datos = new AccesoDatos();
-
-            try
-            {
-                datos.setearConsulta(
-                    "SELECT IdProducto FROM Producto WHERE IdCategoria = @IdCategoria");
-                datos.setearParametro("@IdCategoria", idCategoria);
-                datos.ejecutarLectura();
-
-                return datos.Lector.Read();
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
-
-        public void Eliminar(int idCategoria)
-        {
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.setearConsulta("DELETE FROM Categoria WHERE IdCategoria = @IdCategoria");
-                datos.setearParametro("@IdCategoria", idCategoria);
-                datos.ejecutarAccion();
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
+        
     }
 }
