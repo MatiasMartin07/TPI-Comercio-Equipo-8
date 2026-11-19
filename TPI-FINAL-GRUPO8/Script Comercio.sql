@@ -71,6 +71,27 @@ Activo BIT NOT NULL
 );
 GO
 
+Create table Venta(
+   Id int not null primary key identity(1,1),
+   IdCliete int not null foreign key references Cliente(Id),
+   fecha datetime not null,
+   NroFactura varchar(100) not null,
+   Total decimal not null,
+   Anulado bit not null default 0
+)
+go
+
+--detalle venta
+Create table DetalleVenta(
+    Id int not null primary key identity(1,1),
+    IdProducto int not null foreign key references Producto(IdProducto),
+    IdVenta int not null foreign key references Venta(Id),
+    Cantidad int not null,
+    PrecioUnitario decimal not null,
+    SubTotal decimal not null
+)
+
+
 
 
 ---Carga de datos---
@@ -111,12 +132,12 @@ VALUES
 ('Ana', 'Martínez','27900243','ana@gmail.com',1);
 go
 
---INSERT INTO Usuario (Nombre, Apellido, NombreUsuario, Pass, Rol, Activo)
---VALUES
---('Carlos', 'Administrador', 'admin', '1234', 'Administrador', 1),
---('Lucía', 'Gómez', 'lgomez', 'abcd', 'Vendedor', 1),
---('Esteban', 'Pérez', 'eperez', 'clave123', 'Vendedor', 1),
---('Mariana', 'López', 'mlopez', 'pass456', 'Administrador', 1);
+INSERT INTO Usuario (Nombre, Apellido, NombreUsuario, Pass, Rol, Activo)
+VALUES
+('Carlos', 'Administrador', 'admin', '1234', 'Administrador', 1),
+('Lucía', 'Gómez', 'lgomez', 'abcd', 'Vendedor', 1),
+('Esteban', 'Pérez', 'eperez', 'clave123', 'Vendedor', 1),
+('Mariana', 'López', 'mlopez', 'pass456', 'Administrador', 1);
 
 
 --Procedimiento Almacenado---
@@ -339,3 +360,155 @@ BEGIN
     ) AS Existe;
 END
 GO
+
+--producto
+create procedure sp_ListarPorNombre
+@nombre varchar(50)
+as 
+begin
+  select IdProducto, Nombre,StockActual,StockMinimo,UltimoPrecioCompra,PorcentajeGanancia,Activo
+  from Producto WHERE Nombre LIKE '%' + @nombre + '%'
+      AND Activo = 1
+    ORDER BY Nombre;
+end
+
+---stock de productos 
+create procedure sp_DescontarStock
+@cantidad int,
+@idProducto int 
+as
+begin
+  Update Producto set StockActual = StockActual - @cantidad
+  where IdProducto = @idProducto
+  and StockActual >= @cantidad
+  select @@ROWCOUNT as filasAfectadas;
+end
+
+
+--ventas
+Create procedure sp_AgregarVenta
+@idCliente int,
+@fecha datetime,
+@nroFactura varchar(100),
+@total decimal
+as
+begin
+   Insert into Venta (IdCliete,fecha,NroFactura,Total)
+   values (@idCliente,@fecha,@nroFactura,@total)
+   SELECT SCOPE_IDENTITY()
+end
+
+create procedure sp_ListaVenta
+as
+begin
+    select 
+        V.Id, 
+        V.Fecha, 
+        V.NroFactura, 
+        V.Total, 
+        C.Id as IdCliente,      
+        C.Nombre as NombreCliente,
+        V.Anulado
+    from Venta V
+    INNER JOIN Cliente C on V.IdCliete = C.Id;
+end
+--obtener factura
+CREATE PROCEDURE spObtenerUltimoNumeroFactura
+AS
+BEGIN
+    SELECT ISNULL(MAX(CAST(REPLACE(NroFactura, 'FAC-', '') AS INT)), 0) + 1 AS SiguienteNumero 
+    FROM Venta;
+END
+
+
+EXEC sp_ListaVenta
+
+--detalle venta
+
+Create procedure sp_AgregarDetalleVenta 
+@idProducto int,
+@idVenta int,
+@cantidad int,
+@precioUnitario decimal,
+@subTotal decimal
+as
+begin
+  Insert into DetalleVenta (IdProducto,IdVenta,Cantidad,PrecioUnitario,SubTotal)
+  values (@idProducto,@idVenta,@cantidad,@precioUnitario,@subTotal)
+end
+
+--listar por id
+create procedure sp_ListarVentaId
+ @id int
+as
+begin
+    select 
+        V.Id, 
+        V.Fecha, 
+        V.NroFactura, 
+        V.Total, 
+        C.Id as IdCliente,    
+        C.Nombre as NombreCliente,
+        V.Anulado
+    from Venta V
+    inner join Cliente C on V.IdCliete = C.Id
+    Where V.Id = @id
+end
+
+-- anular la venta y devolver el stock
+CREATE PROCEDURE sp_AnularVenta
+    @idVenta INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        
+        IF NOT EXISTS (SELECT 1 FROM Venta WHERE Id = @idVenta AND Anulado = 0)
+        BEGIN
+            ROLLBACK TRANSACTION;
+            SELECT 0 AS Resultado; 
+            RETURN;
+        END
+
+        UPDATE Venta
+        SET Anulado = 1
+        WHERE Id = @idVenta;
+
+        UPDATE P
+        SET P.StockActual = P.StockActual + DV.Cantidad
+        FROM Producto P
+        INNER JOIN DetalleVenta DV ON P.IdProducto = DV.IdProducto
+        WHERE DV.IdVenta = @idVenta;
+
+        COMMIT TRANSACTION;
+        SELECT 1 AS Resultado; 
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+
+        THROW;
+    END CATCH
+END;
+
+--obtener el id venta del detalle
+Create procedure sp_ObtenerDetalleVenta
+ @idVenta int
+as
+begin
+     select 
+        d.Id,
+        d.IdVenta,      
+        d.IdProducto,   
+        p.Nombre as NombreProducto,
+        d.Cantidad,
+        d.PrecioUnitario,
+        d.SubTotal
+    from DetalleVenta d
+    inner join Producto p on d.IdProducto = p.IdProducto
+    where d.IdVenta = @IdVenta;
+end
+

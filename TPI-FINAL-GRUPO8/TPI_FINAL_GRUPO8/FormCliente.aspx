@@ -16,7 +16,7 @@
 
                 <div class="col">
                     <label class="form-label">DNI o CUIL</label>
-                    <asp:TextBox ID="txtDni" runat="server" placeholder="DNI o CUIT" CssClass="form-control" TextMode="Number" OnTextChanged="txtDni_TextChanged" AutoPostBack="true" ></asp:TextBox>
+                    <asp:TextBox ID="txtDni" runat="server" placeholder="DNI o CUIT" CssClass="form-control" TextMode="Number" min="0" step="1" OnTextChanged="txtDni_TextChanged" AutoPostBack="true" ></asp:TextBox>
                     <asp:Label ID="lblDniError" runat="server" CssClass="text-danger small"></asp:Label>
                 </div>
             </div>
@@ -37,7 +37,7 @@
 
             <div class="mb-3">
                 <label class="form-label">Correo Electrónico</label>
-                <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" placeholder="Ej: sonia@gmail.com" OnTextChanged="txtEmail_TextChanged" AutoPostBack="true"></asp:TextBox>
+                <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" placeholder="Ej: sonia@gmail.com" OnTextChanged="txtEmail_TextChanged" TextMode="Email" AutoPostBack="true"></asp:TextBox>
                 <asp:Label ID="lblEmailError" runat="server" CssClass="text-danger small"></asp:Label>
             </div>
 
@@ -55,27 +55,6 @@
     </div>
 </div>
 
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-        <ContentTemplate>
-            <div class="container mt-3">
-                <div class="row justify-content-center">
-                    <div class="col-md-6 col-lg-5">
-                        <div class="mb-3">
-                            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClick="btnEliminar_Click"  />
-                        </div>
-
-                        <% if (confirmar)
-                        { %>
-                        <div class="mb-3">
-                            <asp:CheckBox ID="cbcConfirma" runat="server" Text="¿Confirma la Eliminación?" />
-                            <asp:Button ID="btnConfirma" runat="server" Text="Si, Eliminar" CssClass="btn btn-outline-danger" OnClick="btnConfirma_Click" />
-                        </div>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
-        </ContentTemplate>
-    </asp:UpdatePanel>
 
 
 </asp:Content>
