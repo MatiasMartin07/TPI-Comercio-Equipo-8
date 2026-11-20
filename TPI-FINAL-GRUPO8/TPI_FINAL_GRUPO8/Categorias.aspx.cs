@@ -14,72 +14,46 @@ namespace TPI_FINAL_GRUPO8
         {
             if (!IsPostBack)
             {
-                CategoriaNegocio negocio = new CategoriaNegocio();
-                gvCategorias.DataSource = negocio.Listar(incluirInactivas: true);
-                gvCategorias.DataBind();
+                CargarCategorias();
             }
         }
 
-        protected void gvCategorias_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName != "SolicitarEliminacion")
-            {
-                return;
-            }
-
-            int idCategoria = Convert.ToInt32(e.CommandArgument);
-            CategoriaNegocio negocio = new CategoriaNegocio();
-
-            ViewState.Remove("IdCategoriaEliminar");
-
-            if (negocio.TieneProductosAsociados(idCategoria))
-            {
-                lblConfirmacion.Text =
-                    "No se puede eliminar esta categoría porque tiene productos asociados. " +
-                    "Podés desactivarla desde Editar o cambiar la categoría de esos productos.";
-            }
-            else
-            {
-                ViewState["IdCategoriaEliminar"] = idCategoria;
-                lblConfirmacion.Text = "¿Querés eliminar definitivamente esta categoría?";
-            }
-
-            pnlConfirmarEliminacion.Visible = true;
-
-            ScriptManager.RegisterStartupScript(
-                this,
-                GetType(),
-                "abrirConfirmacion",
-                "window.addEventListener('load', function () { " +
-                "var ventana = new bootstrap.Modal(document.getElementById('pnlConfirmarEliminacion')); " +
-                "ventana.show(); " +
-                "});",
-                true);
+        protected void txtFiltroCategoria_TextChanged(object sender, EventArgs e) {
+            CargarCategorias();
         }
 
-        protected void btnConfirmarEliminacion_Click(object sender, EventArgs e)
+        protected void ddlEstadoCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
-            pnlConfirmarEliminacion.Visible = false;
+            CargarCategorias();
+        }
 
-            if (ViewState["IdCategoriaEliminar"] == null)
-            {
-                return;
-            }
-
-            int idCategoria = Convert.ToInt32(ViewState["IdCategoriaEliminar"]);
-            ViewState.Remove("IdCategoriaEliminar");
-
+        private void CargarCategorias()
+        {
             CategoriaNegocio negocio = new CategoriaNegocio();
+            var categorias = negocio.Listar(incluirInactivas: true);
+            string filtro = txtFiltroCategoria.Text.Trim();
+            string estado = ddlEstadoCategoria.SelectedValue;
+            bool hayCategorias = categorias.Count > 0;
+            bool filtrarEstado = estado != "todos";
 
-            if (negocio.TieneProductosAsociados(idCategoria))
+            if (filtro.Length > 0)
             {
-                return;
+                categorias = categorias.FindAll(categoria =>
+                    categoria.Nombre.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0);
             }
 
-            negocio.Eliminar(idCategoria);
+            if (filtrarEstado)
+            {
+                bool mostrarActivas = estado == "activos";
+                categorias = categorias.FindAll(categoria => categoria.Activo == mostrarActivas);
+            }
 
-            Response.Redirect("Categorias.aspx", false);
-            Context.ApplicationInstance.CompleteRequest();
+            gvCategorias.EmptyDataText = hayCategorias && (filtro.Length > 0 || filtrarEstado)
+                ? "No se encontraron categorías con los filtros seleccionados."
+                : "No hay categorías para mostrar.";
+
+            gvCategorias.DataSource = categorias;
+            gvCategorias.DataBind();
         }
     }
 }

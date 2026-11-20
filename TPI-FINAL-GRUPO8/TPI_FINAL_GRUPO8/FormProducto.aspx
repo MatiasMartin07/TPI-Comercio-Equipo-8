@@ -128,6 +128,16 @@
 
                 </asp:Panel>
             </div>
+            <div class="mb-3">
+                <asp:Label runat="server"
+                    Text="Imagen desde la PC"
+                    AssociatedControlID="fuImagenProducto" />
+
+                <asp:FileUpload ID="fuImagenProducto" runat="server"
+                    CssClass="form-control"
+                    accept="image/jpeg,image/png"
+                    onchange="mostrarImagenSeleccionada(this)" />
+            </div>
             <h2>Vista previa</h2>
             <div class="border rounded bg-light overflow-hidden"
                 style="height: 400px;">
@@ -135,7 +145,7 @@
                     CssClass="w-100 h-100"
                     Style="object-fit: contain;"
                     AlternateText="Imagen del producto"
-                    Visible="false" />
+                    ImageUrl="~/Imagenes/productoSinImagen.png" />
             </div>
             <div class="mt-3 d-flex justify-content-end gap-2">
                 <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-primary" OnClick="btnGuardar_Click" ValidationGroup="Producto" />
@@ -145,4 +155,24 @@
         </div>
     </div>
     </div>
+        <script>
+        function mostrarImagenSeleccionada(selector) {
+            const archivo = selector.files[0];
+
+            if (!archivo) {
+                return;
+            }
+
+            const lector = new FileReader();
+
+            lector.onload = function (evento) {
+                const imagen = document.getElementById(
+                    '<%= imgProducto.ClientID %>');
+
+                imagen.src = evento.target.result;
+            };
+
+            lector.readAsDataURL(archivo);
+        }
+    </script>
 </asp:Content>

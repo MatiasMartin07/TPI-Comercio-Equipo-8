@@ -4,9 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Globalization;
+using System.IO;
 using Negocio;
 using Dominio;
-using System.Globalization;
+
 
 namespace TPI_FINAL_GRUPO8
 {
@@ -52,16 +54,8 @@ namespace TPI_FINAL_GRUPO8
                         txtStockMinimo.Text = seleccionado.StockMinimo.ToString();
                         txtUltimoPrecioCompra.Text = seleccionado.UltimoPrecioCompra.ToString();
                         txtPorcentajeGanancia.Text = seleccionado.PorcentajeGanancia.ToString();
-
                         txtUrlImagen.Text = seleccionado.UrlImagen;
-                        if (string.IsNullOrWhiteSpace(seleccionado.UrlImagen))
-                        {
-                            imgProducto.ImageUrl = "~/Imagenes/productoSinImagen.png";
-                        }
-                        else
-                        {
-                            imgProducto.ImageUrl = seleccionado.UrlImagen;
-                        }
+                        imgProducto.ImageUrl = ObtenerUrlImagen(seleccionado.UrlImagen);
                         imgProducto.Visible = true;
                         btnDesactivar.Visible = seleccionado.Activo;
                         btnReactivar.Visible = !seleccionado.Activo;
@@ -70,12 +64,83 @@ namespace TPI_FINAL_GRUPO8
             }
         }
 
+        private string ObtenerUrlImagen(string enlace)
+        {
+            string url = (enlace ?? "").Trim();
+
+            if (url.Length == 0)
+            {
+                return "~/Imagenes/productoSinImagen.png";
+            }
+
+            Uri direccion;
+            if (!Uri.TryCreate(url, UriKind.Absolute, out direccion) ||
+                !direccion.Host.Equals("drive.google.com", StringComparison.OrdinalIgnoreCase))
+            {
+                return url;
+            }
+
+            string idImagen = HttpUtility.ParseQueryString(direccion.Query)["id"];
+            string[] partes = direccion.AbsolutePath.Split(
+                new[] { '/' },
+                StringSplitOptions.RemoveEmptyEntries);
+
+            if (partes.Length >= 3 &&
+                partes[0] == "file" &&
+                partes[1] == "d")
+            {
+                idImagen = partes[2];
+            }
+
+            if (string.IsNullOrWhiteSpace(idImagen))
+            {
+                return url;
+            }
+
+            return "https://drive.google.com/thumbnail?id=" +
+                Uri.EscapeDataString(idImagen) + "&sz=w800";
+        }
+
         protected void txtUrlImagen_TextChanged(object sender, EventArgs e)
         {
-            string url = txtUrlImagen.Text.Trim();
+            imgProducto.ImageUrl = ObtenerUrlImagen(txtUrlImagen.Text);
+            imgProducto.Visible = true;
+        }
 
-            imgProducto.ImageUrl = url;
-            imgProducto.Visible = !string.IsNullOrEmpty(url);
+        private string GuardarImagenProducto()
+        {
+            string carpeta = Server.MapPath("~/Imagenes/Productos/");
+            string nombreArchivo;
+            string rutaFisica;
+
+            using (var imagen = System.Drawing.Image.FromStream(
+                fuImagenProducto.PostedFile.InputStream))
+            {
+                var formato = imagen.RawFormat;
+                string extension;
+
+                if (formato.Equals(System.Drawing.Imaging.ImageFormat.Jpeg))
+                {
+                    extension = ".jpg";
+                }
+                else if (formato.Equals(System.Drawing.Imaging.ImageFormat.Png))
+                {
+                    extension = ".png";
+                }
+                else
+                {
+                    throw new HttpException(400, "Elegí una imagen JPG o PNG.");
+                }
+
+                Directory.CreateDirectory(carpeta);
+
+                nombreArchivo = Guid.NewGuid().ToString("N") + extension;
+                rutaFisica = Path.Combine(carpeta, nombreArchivo);
+
+                imagen.Save(rutaFisica, formato);
+            }
+
+            return "~/Imagenes/Productos/" + nombreArchivo;
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -86,6 +151,8 @@ namespace TPI_FINAL_GRUPO8
             {
                 return;
             }
+
+            string rutaImagenNueva = null;
 
             try
             {
@@ -112,6 +179,14 @@ namespace TPI_FINAL_GRUPO8
 
                 string id = Request.QueryString["id"];
 
+                if (fuImagenProducto.HasFile)
+                {
+                    rutaImagenNueva = GuardarImagenProducto();
+                    nuevo.UrlImagen = rutaImagenNueva;
+                }
+
+
+
                 if (id == null)
                 {
                     negocio.Agregar(nuevo);
@@ -129,12 +204,17 @@ namespace TPI_FINAL_GRUPO8
                     negocio.Modificar(nuevo);
                 }
 
+                rutaImagenNueva = null;
                 Response.Redirect("Productos.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();
 
             }
             catch (Exception)
             {
+                if (rutaImagenNueva != null)
+                {
+                    File.Delete(Server.MapPath(rutaImagenNueva));
+                }
 
                 throw;
             }

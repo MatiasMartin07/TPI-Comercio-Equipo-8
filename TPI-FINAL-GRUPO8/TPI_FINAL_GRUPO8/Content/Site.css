@@ -1,21 +1,153 @@
-﻿/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
+﻿/* Espaciado general del contenido */
 .body-content {
     margin-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
 }
 
-/* Set widths on the form inputs since otherwise they're 100% wide */
+/* Ancho máximo de los campos de los formularios */
 input,
 select,
 textarea {
     max-width: 280px;
 }
 
-/* Responsive: Portrait tablets and up */
+/* Quitar el relleno general desde pantallas de 768 px */
 @media screen and (min-width: 768px) {
     .body-content {
         padding: 0;
     }
+}
+
+/* Organizar en columna los contenedores de los listados */
+main:has(> div > .listado-catalogo),
+main > div:has(> .listado-catalogo) {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Separación inferior entre los listados y el footer */
+main:has(> div > .listado-catalogo) {
+    padding-bottom: 1rem !important;
+}
+
+/* Permitir que los listados ocupen el espacio disponible */
+main > div:has(> .listado-catalogo),
+.listado-catalogo {
+    flex-grow: 1;
+}
+
+/* Altura mínima de los listados, incluso sin resultados */
+.listado-catalogo {
+    min-height: 226px;
+}
+
+/* Mensaje centrado cuando una tabla no tiene resultados */
+.table > tbody > .listado-sin-resultados > td {
+    padding: 2.5rem 0.75rem;
+    text-align: center;
+    color: #6c757d;
+    border-bottom: 0;
+}
+
+/* Altura mínima y fondo de los accesos de Inicio */
+.inicio-acceso {
+    min-height: 98px;
+    background-color: #e9eef5;
+}
+
+    /* Tamaño de los títulos de los accesos */
+    .inicio-acceso .fw-semibold {
+        font-size: 1.125rem !important;
+    }
+
+    /* Resaltar el acceso al pasar el mouse o enfocarlo con el teclado */
+    .inicio-acceso:hover,
+    .inicio-acceso:focus-visible {
+        background-color: var(--bs-light);
+        border-color: var(--bs-primary) !important;
+    }
+
+    /* Contorno para identificar el acceso seleccionado con el teclado */
+    .inicio-acceso:focus-visible {
+        outline: 2px solid var(--bs-primary);
+        outline-offset: 2px;
+    }
+
+/* Transición suave del movimiento y la sombra */
+.inicio-elevar {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    /* Elevar el acceso y agregar sombra al interactuar */
+    .inicio-elevar:hover,
+    .inicio-elevar:focus-visible {
+        transform: translateY(-4px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+/* Quitar la transición si el usuario prefiere reducir las animaciones */
+@media (prefers-reduced-motion: reduce) {
+    .inicio-elevar {
+        transition: none;
+    }
+}
+
+/* Borde izquierdo y desplazamiento visual del banner */
+.inicio-banner {
+    border-left: 5px solid var(--bs-primary) !important;
+    position: relative;
+    top: 20px;
+}
+
+/* Fondo azul visible a los costados de Inicio */
+body:has(.inicio-banner) {
+    background-color: #2563c4;
+}
+
+/* Centro blanco de Inicio; Bootstrap controla su ancho */
+.body-content:has(.inicio-banner) {
+    background-color: white;
+    margin-top: 0;
+    padding-top: 15px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+/* Alinear el contenido del menú con el centro blanco */
+body:has(.inicio-banner) .navbar > .container {
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+/* Aumentar la altura mínima de los accesos desde 992 px */
+@media (min-width: 992px) {
+    .body-content:has(.inicio-banner) .inicio-acceso {
+        min-height: 120px;
+    }
+}
+
+/* Organizar el contenido principal de Inicio en columna */
+.body-content:has(.inicio-banner) > main {
+    display: flex;
+    flex-direction: column;
+    padding-top: 1.5rem !important;
+    padding-bottom: 0 !important;
+}
+
+    /* Extender el contenedor del banner y los módulos */
+    .body-content:has(.inicio-banner) > main > div {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+/* Centrar los módulos en el espacio disponible debajo del banner */
+.inicio-modulos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    padding-top: 24px;
+    padding-bottom: 24px;
 }

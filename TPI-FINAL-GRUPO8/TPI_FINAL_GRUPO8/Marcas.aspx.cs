@@ -14,78 +14,47 @@ namespace TPI_FINAL_GRUPO8
         {
             if (!IsPostBack)
             {
-                MarcaNegocio negocio = new MarcaNegocio();
-                gvMarcas.DataSource = negocio.Listar();
-                gvMarcas.DataBind();
+                CargarMarcas();
             }
         }
 
-        protected void gvMarcas_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void txtFiltroMarca_TextChanged(object sender, EventArgs e)
         {
-            if (e.CommandName == "SolicitarEliminacion")
-            {
-                lblError.Text = "";
-
-                int idMarca = Convert.ToInt32(e.CommandArgument);
-                MarcaNegocio negocio = new MarcaNegocio();
-
-                ViewState["IdMarcaEliminar"] = idMarca;
-
-                if (negocio.TieneProductosAsociados(idMarca))
-                {
-                    lblConfirmacion.Text =
-                    "No se puede eliminar esta marca porque tiene productos asociados. " +
-                    "Podés desactivarla desde Editar, eliminar esos productos o cambiarles la marca.";
-                }
-                else
-                {
-                    lblConfirmacion.Text =
-                        "¿Querés eliminar definitivamente esta marca?";
-                }
-
-                pnlConfirmarEliminacion.Visible = true;
-
-                ScriptManager.RegisterStartupScript(
-                    this,
-                    GetType(),
-                    "abrirConfirmacion",
-                    "window.addEventListener('load', function () { " +
-                    "var ventana = new bootstrap.Modal(document.getElementById('pnlConfirmarEliminacion')); " +
-                    "ventana.show(); " +
-                    "});",
-                    true);
-            }
+            CargarMarcas();
         }
 
-        protected void btnCancelarEliminacion_Click(object sender, EventArgs e)
+        protected void ddlEstadoMarca_SelectedIndexChanged(object sender, EventArgs e)
         {
-            pnlConfirmarEliminacion.Visible = false;
-            ViewState.Remove("IdMarcaEliminar");
+            CargarMarcas();
         }
 
-        protected void btnConfirmarEliminacion_Click(object sender, EventArgs e)
+        private void CargarMarcas()
         {
-            if (ViewState["IdMarcaEliminar"] == null)
-            {
-                return;
-            }
-
-            int idMarca = Convert.ToInt32(ViewState["IdMarcaEliminar"]);
             MarcaNegocio negocio = new MarcaNegocio();
+            var marcas = negocio.Listar();
+            string filtro = txtFiltroMarca.Text.Trim();
+            string estado = ddlEstadoMarca.SelectedValue;
+            bool hayMarcas = marcas.Count > 0;
+            bool filtrarEstado = estado != "todos";
 
-            if (negocio.TieneProductosAsociados(idMarca))
+            if (filtro.Length > 0)
             {
-                pnlConfirmarEliminacion.Visible = false;
-                ViewState.Remove("IdMarcaEliminar");
-                return;
+                marcas = marcas.FindAll(marca =>
+                    marca.Nombre.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0);
             }
 
-            negocio.Eliminar(idMarca);
+            if (filtrarEstado)
+            {
+                bool mostrarActivas = estado == "activos";
+                marcas = marcas.FindAll(marca => marca.Activo == mostrarActivas);
+            }
 
-            ViewState.Remove("IdMarcaEliminar");
+            gvMarcas.EmptyDataText = hayMarcas && (filtro.Length > 0 || filtrarEstado)
+                ? "No se encontraron marcas con los filtros seleccionados."
+                : "No hay marcas para mostrar.";
 
-            Response.Redirect("Marcas.aspx", false);
-            Context.ApplicationInstance.CompleteRequest();
+            gvMarcas.DataSource = marcas;
+            gvMarcas.DataBind();
         }
     }
 }
