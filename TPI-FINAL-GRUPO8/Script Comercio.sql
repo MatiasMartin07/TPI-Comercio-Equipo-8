@@ -48,7 +48,7 @@ create table Cliente(
     Email varchar(200) not null,
     Activo Bit not null default 1
 );
-
+GO
 CREATE TABLE Usuario (
     Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     Nombre VARCHAR(50) NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE Usuario (
     Rol VARCHAR(30) NOT NULL,
     Activo BIT NOT NULL DEFAULT 1
 );
-
+GO
 create table Proveedor(
 IdProveedor INT PRIMARY KEY IDENTITY(1,1),
 Codigo VARCHAR(50) UNIQUE NOT NULL,
@@ -70,8 +70,34 @@ Activo BIT NOT NULL
     CONSTRAINT DF_Proveedor_Activo DEFAULT (1)
 );
 GO
+CREATE TABLE Compra (
+    IdCompra INT PRIMARY KEY IDENTITY(1,1),
+    Fecha DATETIME NOT NULL DEFAULT GETDATE(),
+    IdProveedor INT NOT NULL,
+    Total DECIMAL(18, 2) NOT NULL DEFAULT 0 CHECK (Total >= 0),
+    FOREIGN KEY (IdProveedor) REFERENCES Proveedor(IdProveedor)
+);
+GO
+CREATE TABLE DetalleCompra (
+    IdDetalleCompra INT PRIMARY KEY IDENTITY(1,1),
+    IdCompra INT NOT NULL, 
+    IdProducto INT NOT NULL,
+    Cantidad INT NOT NULL CHECK (Cantidad > 0),
+    PrecioUnitario DECIMAL(18, 2) NOT NULL CHECK (PrecioUnitario >= 0),
+    SubTotal AS (Cantidad * PrecioUnitario) PERSISTED,
+    FOREIGN KEY (IdCompra) REFERENCES Compra(IdCompra),
+    FOREIGN KEY (IdProducto) REFERENCES Producto(IdProducto)
+);
+GO
+ALTER TABLE Producto
+ADD IdProveedor INT NULL;
+GO
 
-
+ALTER TABLE Producto
+ADD CONSTRAINT FK_Producto_Proveedor
+FOREIGN KEY (IdProveedor)
+REFERENCES Proveedor(IdProveedor);
+GO
 
 ---Carga de datos---
 INSERT INTO Marca (Nombre)
@@ -101,7 +127,6 @@ VALUES
     ('Galletitas',  3, 1, 16,  6, 900.00, 35.00, 1),
     ('Detergente',  3, 3, 14,  5, 1500.00, 30.00, 1);
 GO
-
 
 INSERT INTO Cliente (Nombre, Apellido,Dni,Email,Activo) 
 VALUES 
@@ -338,4 +363,59 @@ BEGIN
         AS BIT
     ) AS Existe;
 END
+GO
+
+
+ALTER TABLE dbo.Producto
+ADD IdMarca INT NULL,
+    IdCategoria INT NULL,
+    UrlImagen VARCHAR(2048) NULL;
+GO
+
+UPDATE dbo.Producto
+SET IdMarca = CASE Nombre
+    WHEN 'Cafe molido' THEN 1
+    WHEN 'Yerba mate'  THEN 3
+    WHEN 'Azucar'      THEN 3
+    WHEN 'Leche'       THEN 2
+    WHEN 'Harina'      THEN 3
+    WHEN 'Arroz'       THEN 3
+    WHEN 'Fideos'      THEN 3
+    WHEN 'Aceite'      THEN 3
+    WHEN 'Galletitas'  THEN 3
+    WHEN 'Detergente'  THEN 3
+END,
+IdCategoria = CASE Nombre
+    WHEN 'Cafe molido' THEN 1
+    WHEN 'Yerba mate'  THEN 1
+    WHEN 'Azucar'      THEN 1
+    WHEN 'Leche'       THEN 2
+    WHEN 'Harina'      THEN 1
+    WHEN 'Arroz'       THEN 1
+    WHEN 'Fideos'      THEN 1
+    WHEN 'Aceite'      THEN 1
+    WHEN 'Galletitas'  THEN 1
+    WHEN 'Detergente'  THEN 3
+END;
+GO
+
+
+--Modificaciones de las tablas para que corra todo ok
+--A la hora de crear nuevamente la BD sumarlo para que no quede esto
+ALTER TABLE Producto
+ALTER COLUMN IdMarca INT NOT NULL;
+GO
+
+ALTER TABLE Producto
+ALTER COLUMN IdCategoria INT NOT NULL;
+GO
+
+ALTER TABLE Producto
+ADD CONSTRAINT FK_Producto_Marca
+FOREIGN KEY (IdMarca) REFERENCES Marca(IdMarca);
+GO
+
+ALTER TABLE Producto
+ADD CONSTRAINT FK_Producto_Categoria
+FOREIGN KEY (IdCategoria) REFERENCES Categoria(IdCategoria);
 GO

@@ -16,12 +16,14 @@ namespace Negocio
             try
             {
                 datos.setearConsulta("SELECT p.IdProducto, p.Nombre, p.StockActual, p.StockMinimo, " +
-                                    "p.UltimoPrecioCompra, p.PorcentajeGanancia, p.UrlImagen, p.Activo, " +
-                                    "m.IdMarca, m.Nombre AS NombreMarca, " +
-                                    "c.IdCategoria, c.Nombre AS NombreCategoria " +
-                                    "FROM Producto p " +
-                                    "INNER JOIN Marca m ON p.IdMarca = m.IdMarca " +
-                                    "INNER JOIN Categoria c ON p.IdCategoria = c.IdCategoria");
+                     "p.UltimoPrecioCompra, p.PorcentajeGanancia, p.UrlImagen, p.Activo, " +
+                     "p.IdProveedor, " +
+                     "m.IdMarca, m.Nombre AS NombreMarca, " +
+                     "c.IdCategoria, c.Nombre AS NombreCategoria " +
+                     "FROM Producto p " +
+                     "INNER JOIN Marca m ON p.IdMarca = m.IdMarca " +
+                     "INNER JOIN Categoria c ON p.IdCategoria = c.IdCategoria");
+
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -49,6 +51,12 @@ namespace Negocio
                     aux.Categoria.IdCategoria = (int)datos.Lector["IdCategoria"];
                     aux.Categoria.Nombre = (string)datos.Lector["NombreCategoria"];
 
+                    if (datos.Lector["IdProveedor"] != DBNull.Value)
+                    {
+                        aux.Proveedores = new Proveedores();
+                        aux.Proveedores.Id = (int)datos.Lector["IdProveedor"];
+                    }
+
                     lista.Add(aux);
                 }
                 return lista;
@@ -71,7 +79,7 @@ namespace Negocio
                 datos.setearConsulta(
                     "SELECT IdProducto, Nombre, IdMarca, IdCategoria, " +
                     "StockActual, StockMinimo, UltimoPrecioCompra, " +
-                    "PorcentajeGanancia, UrlImagen, Activo " +
+                    "PorcentajeGanancia, UrlImagen, Activo, IdProveedor "+
                     "FROM dbo.Producto WHERE IdProducto = @IdProducto");
 
                 datos.setearParametro("@IdProducto", idProducto);
@@ -97,6 +105,12 @@ namespace Negocio
 
                 producto.Categoria = new Categoria();
                 producto.Categoria.IdCategoria = (int)datos.Lector["IdCategoria"];
+                
+                if (datos.Lector["IdProveedor"] != DBNull.Value)
+                {
+                    producto.Proveedores = new Proveedores();
+                    producto.Proveedores.Id = (int)datos.Lector["IdProveedor"];
+                }
 
                 return producto;
             }
@@ -114,10 +128,10 @@ namespace Negocio
                 datos.setearConsulta(
                                     "INSERT INTO Producto " +
                                     "(Nombre, IdMarca, IdCategoria, StockActual, StockMinimo, " +
-                                    "UltimoPrecioCompra, PorcentajeGanancia, UrlImagen, Activo) " +
+                                    "UltimoPrecioCompra, PorcentajeGanancia, UrlImagen, Activo, IdProveedor) " +
                                     "VALUES (@Nombre, @IdMarca, @IdCategoria, @StockActual, " +
                                     "@StockMinimo, @UltimoPrecioCompra, @PorcentajeGanancia, " +
-                                    "@UrlImagen, @Activo)");
+                                    "@UrlImagen, @Activo, @IdProveedor)");
 
                 datos.setearParametro("@Nombre", nuevo.Nombre);
                 datos.setearParametro("@IdMarca", nuevo.Marca.IdMarca);
@@ -127,7 +141,7 @@ namespace Negocio
                 datos.setearParametro("@UltimoPrecioCompra", nuevo.UltimoPrecioCompra);
                 datos.setearParametro("@PorcentajeGanancia", nuevo.PorcentajeGanancia);
                 datos.setearParametro("@Activo", true);
-
+                datos.setearParametro("@IdProveedor", nuevo.Proveedores.Id);
                 if (string.IsNullOrWhiteSpace(nuevo.UrlImagen))
                 {
                     datos.setearParametro("@UrlImagen", DBNull.Value);
@@ -159,7 +173,7 @@ namespace Negocio
                                     "UPDATE dbo.Producto SET Nombre = @Nombre, IdMarca = @IdMarca, " +
                                     "IdCategoria = @IdCategoria, StockActual = @StockActual, " +
                                     "StockMinimo = @StockMinimo, UltimoPrecioCompra = @UltimoPrecioCompra, " +
-                                    "PorcentajeGanancia = @PorcentajeGanancia, UrlImagen = @UrlImagen " +
+                                    "PorcentajeGanancia = @PorcentajeGanancia, UrlImagen = @UrlImagen, IdProveedor = @IdProveedor " +
                                     "WHERE IdProducto = @IdProducto");
 
                 datos.setearParametro("@IdProducto", producto.IdProducto);
@@ -170,6 +184,7 @@ namespace Negocio
                 datos.setearParametro("@StockMinimo", producto.StockMinimo);
                 datos.setearParametro("@UltimoPrecioCompra", producto.UltimoPrecioCompra);
                 datos.setearParametro("@PorcentajeGanancia", producto.PorcentajeGanancia);
+                datos.setearParametro("@IdProveedor", producto.Proveedores.Id);
 
                 if (string.IsNullOrWhiteSpace(producto.UrlImagen))
                 {

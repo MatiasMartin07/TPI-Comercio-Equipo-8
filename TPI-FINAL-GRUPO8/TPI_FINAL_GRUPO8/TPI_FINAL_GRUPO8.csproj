@@ -119,10 +119,12 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="DetalleCompra.aspx" />
     <Content Include="Facturas.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="FormCategoria.aspx" />
     <Content Include="FormCliente.aspx" />
+    <Content Include="FormCompra.aspx" />
     <Content Include="FormProveedor.aspx" />
     <Content Include="FormMarca.aspx" />
     <Content Include="FormUsuario.aspx" />
@@ -221,6 +223,13 @@
     <Compile Include="Compras.aspx.designer.cs">
       <DependentUpon>Compras.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DetalleCompra.aspx.cs">
+      <DependentUpon>DetalleCompra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalleCompra.aspx.designer.cs">
+      <DependentUpon>DetalleCompra.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Facturas.aspx.cs">
       <DependentUpon>Facturas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -242,13 +251,20 @@
     <Compile Include="FormCliente.aspx.designer.cs">
       <DependentUpon>FormCliente.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FormCompra.aspx.cs">
+      <DependentUpon>FormCompra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormCompra.aspx.designer.cs">
+      <DependentUpon>FormCompra.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FormProveedor.aspx.cs">
       <DependentUpon>FormProveedor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="FormProveedor.aspx.designer.cs">
       <DependentUpon>FormProveedor.aspx</DependentUpon>
-    </Compile>  
+    </Compile>
     <Compile Include="FormMarca.aspx.cs">
       <DependentUpon>FormMarca.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

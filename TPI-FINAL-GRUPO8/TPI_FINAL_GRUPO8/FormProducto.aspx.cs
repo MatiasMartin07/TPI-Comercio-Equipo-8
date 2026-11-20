@@ -37,6 +37,15 @@ namespace TPI_FINAL_GRUPO8
 
                 string id = Request.QueryString["id"];
 
+                ProveedoresNegocio proveedoresNegocio = new ProveedoresNegocio();
+
+                ddlProveedor.DataSource = proveedoresNegocio.Listar();
+                ddlProveedor.DataValueField = "Id";
+                ddlProveedor.DataTextField = "RazonSocial";
+                ddlProveedor.DataBind();
+                ddlProveedor.Items.Insert(0, new ListItem("Seleccione un proveedor", ""));
+                ddlProveedor.SelectedIndex = 0;
+
                 if (int.TryParse(id, out idProducto))
                 {
                     ProductoNegocio productoNegocio = new ProductoNegocio();
@@ -52,6 +61,10 @@ namespace TPI_FINAL_GRUPO8
                         txtStockMinimo.Text = seleccionado.StockMinimo.ToString();
                         txtUltimoPrecioCompra.Text = seleccionado.UltimoPrecioCompra.ToString();
                         txtPorcentajeGanancia.Text = seleccionado.PorcentajeGanancia.ToString();
+                        if (seleccionado.Proveedores != null)
+                        {
+                            ddlProveedor.SelectedValue = seleccionado.Proveedores.Id.ToString();
+                        }
 
                         txtUrlImagen.Text = seleccionado.UrlImagen;
                         if (string.IsNullOrWhiteSpace(seleccionado.UrlImagen))
@@ -100,6 +113,9 @@ namespace TPI_FINAL_GRUPO8
 
                 nuevo.Categoria = new Categoria();
                 nuevo.Categoria.IdCategoria = int.Parse(ddlCategoria.SelectedValue);
+
+                nuevo.Proveedores = new Dominio.Proveedores();
+                nuevo.Proveedores.Id = int.Parse(ddlProveedor.SelectedValue);
 
                 nuevo.StockActual = int.Parse(txtStockActual.Text);
                 nuevo.StockMinimo = int.Parse(txtStockMinimo.Text);

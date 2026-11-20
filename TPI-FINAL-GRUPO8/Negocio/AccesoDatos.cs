@@ -13,6 +13,7 @@ namespace Negocio
         private SqlConnection conexion;
         private SqlCommand comando;
         private SqlDataReader lector;
+        private SqlTransaction transaccion;
         public SqlDataReader Lector
         {
             get { return lector; }
@@ -50,17 +51,50 @@ namespace Negocio
                 throw ex;
             }
         }
+        public void iniciarTransaccion()
+        {
+            transaccion = conexion.BeginTransaction();
+            comando.Transaction = transaccion;
+        }
+
+        public void confirmarTransaccion()
+        {
+            if (transaccion != null)
+            {
+                transaccion.Commit();
+                transaccion.Dispose();
+                transaccion = null;
+                comando.Transaction = null;
+            }
+        }
+
+        public void cancelarTransaccion()
+        {
+            if (transaccion != null)
+            {
+                transaccion.Rollback();
+                transaccion.Dispose();
+                transaccion = null;
+                comando.Transaction = null;
+            }
+        }
+
         public void setearConsulta(string consulta)
         {
+            comando.Parameters.Clear();
             comando.CommandType = System.Data.CommandType.Text;
             comando.CommandText = consulta;
             comando.Connection = conexion;
+            comando.Transaction = transaccion;
         }
 
         public void setearProcedimiento(string sp)
         {
+            comando.Parameters.Clear();
             comando.CommandType = System.Data.CommandType.StoredProcedure;
             comando.CommandText = sp;
+            comando.Connection = conexion;
+            comando.Transaction = transaccion;
         }
 
 
@@ -69,6 +103,7 @@ namespace Negocio
             comando.Connection = conexion;
             try
             {
+                comando.Transaction = transaccion;
                 lector = comando.ExecuteReader();
 
             }
@@ -87,6 +122,7 @@ namespace Negocio
             comando.Connection = conexion;
             try
             {
+                comando.Transaction = transaccion;
                 comando.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -99,6 +135,7 @@ namespace Negocio
             comando.Connection = conexion;
             try
             {
+                comando.Transaction = transaccion;
                 return comando.ExecuteScalar();
             }
             catch (Exception ex)
