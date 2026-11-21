@@ -190,6 +190,37 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public Cliente buscarDni(string dni)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("spListaClienteDni");
+                datos.setearParametro("@dni", dni);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    Cliente aux = new Cliente();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Dni = (string)datos.Lector["Dni"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
+                    return aux;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public void eliminarLogico(int id, bool activo = false)
         {
             try

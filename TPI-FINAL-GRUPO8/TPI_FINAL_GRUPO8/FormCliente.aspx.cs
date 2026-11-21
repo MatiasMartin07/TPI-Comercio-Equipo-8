@@ -3,6 +3,7 @@ using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -11,11 +12,9 @@ namespace TPI_FINAL_GRUPO8
 {
     public partial class FormCliente : System.Web.UI.Page
     {
-        public bool confirmar { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             txtId.Enabled = false;
-            confirmar = false;
 
             if (!IsPostBack)
             {
@@ -95,9 +94,10 @@ namespace TPI_FINAL_GRUPO8
                 }
                 nuevo.Dni = dniIngresado;
 
-                if (string.IsNullOrEmpty(txtEmail.Text))
+                string email = txtEmail.Text.Trim();
+                if (!emailValido(email))
                 {
-                    lblEmailError.Text = "Debe Ingresar un Nombre";
+                    lblEmailError.Text = "Debe Ingresar un Email Válido";
                     txtEmail.BorderColor = System.Drawing.Color.Red;
                     return;
                 }
@@ -106,7 +106,7 @@ namespace TPI_FINAL_GRUPO8
                     txtEmail.BorderColor = System.Drawing.Color.Empty;
                     lblEmailError.Text = "";
                 }
-                nuevo.Email = txtEmail.Text;
+                nuevo.Email = email;
 
                 nuevo.Activo = true;
 
@@ -128,10 +128,25 @@ namespace TPI_FINAL_GRUPO8
             }
         }
 
+        private bool emailValido(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return false;
+            }
+            email = email.Trim();
+            return Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+        }
+
         protected void btnInactivar_Click(object sender, EventArgs e)
         {
             try
             {
+                if (Session["clienteSeleccionado"] == null)
+                {
+                    Response.Redirect("Clientes.aspx", false);
+                    return;
+                }
                 ClienteNegocio negocio = new ClienteNegocio();
                 Cliente seleccionado = (Cliente)Session["clienteSeleccionado"];
 
@@ -145,27 +160,6 @@ namespace TPI_FINAL_GRUPO8
             }
         }
 
-        protected void btnEliminar_Click(object sender, EventArgs e)
-        {
-            confirmar = true;
-        }
-
-        protected void btnConfirma_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (cbcConfirma.Checked)
-                {
-                    ClienteNegocio negocio = new ClienteNegocio();
-                    negocio.eliminar(int.Parse(txtId.Text));
-                    Response.Redirect("Clientes.aspx", false);
-                }
-            }
-            catch (Exception ex)
-            {
-                Session.Add("error", ex.ToString());
-            }
-        }
 
         protected void txtDni_TextChanged(object sender, EventArgs e)
         {

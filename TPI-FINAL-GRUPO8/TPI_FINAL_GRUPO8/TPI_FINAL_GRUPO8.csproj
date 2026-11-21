@@ -127,6 +127,7 @@
     <Content Include="FormMarca.aspx" />
     <Content Include="FormUsuario.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="HistorialVenta.aspx" />
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Marcas.aspx" />
@@ -248,7 +249,7 @@
     </Compile>
     <Compile Include="FormProveedor.aspx.designer.cs">
       <DependentUpon>FormProveedor.aspx</DependentUpon>
-    </Compile>  
+    </Compile>
     <Compile Include="FormMarca.aspx.cs">
       <DependentUpon>FormMarca.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -265,6 +266,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="HistorialVenta.aspx.cs">
+      <DependentUpon>HistorialVenta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HistorialVenta.aspx.designer.cs">
+      <DependentUpon>HistorialVenta.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inicio.aspx.cs">
       <DependentUpon>Inicio.aspx</DependentUpon>

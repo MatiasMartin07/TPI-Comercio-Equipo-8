@@ -14,5 +14,6 @@ namespace Dominio
         public List<DetalleVenta> Detalle { get; set; }
         public string NroFactura { get; set; }
         public decimal Total { get; set; }
+        public bool Anulado { get; set; }
     }
 }

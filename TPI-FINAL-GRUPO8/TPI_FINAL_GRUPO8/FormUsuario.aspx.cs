@@ -11,11 +11,9 @@ namespace TPI_FINAL_GRUPO8
 {
     public partial class FormUsuario : System.Web.UI.Page
     {
-        public bool confirmar { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             txtId.Enabled = false;
-            confirmar = false;
 
             if (!IsPostBack)
             {
@@ -130,6 +128,11 @@ namespace TPI_FINAL_GRUPO8
         {
             try
             {
+                if (Session["usuarioSeleccionado"] == null)
+                {
+                    Response.Redirect("Usuarios.aspx", false);
+                    return;
+                }
                 UsuarioNegocio negocio = new UsuarioNegocio();
                 Usuario seleccionado = (Usuario)Session["usuarioSeleccionado"];
                 negocio.eliminarLogico(seleccionado.Id, !seleccionado.Activo);
@@ -141,29 +144,6 @@ namespace TPI_FINAL_GRUPO8
                 Session.Add("error", ex.ToString());
             }
 
-        }
-
-        protected void btnEliminar_Click(object sender, EventArgs e)
-        {
-            confirmar = true;
-        }
-
-        protected void btnConfirma_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (cbcConfirma.Checked)
-                {
-                    UsuarioNegocio negocio = new UsuarioNegocio();
-                    negocio.eliminar(int.Parse(txtId.Text));
-                    Response.Redirect("Usuarios.aspx", false);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Session.Add("error", ex.ToString());
-            }
         }
 
         protected void txtNombre_TextChanged(object sender, EventArgs e)
