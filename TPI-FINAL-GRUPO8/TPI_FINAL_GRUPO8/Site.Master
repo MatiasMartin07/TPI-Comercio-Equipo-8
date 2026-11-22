@@ -17,7 +17,9 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <style>
         .menu-productos:hover > .dropdown-menu,
-        .menu-productos:focus-within > .dropdown-menu {
+        .menu-productos:focus-within > .dropdown-menu,
+        .menu-ventas:hover .dropdown-menu
+        {
             display: block;
             margin-top: 0;
         }
@@ -72,7 +74,14 @@
                         </li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Proveedores">Proveedores</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Clientes">Clientes</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Ventas">Ventas</a></li>
+                        <li class="nav-item dropdown menu-ventas">
+                            <a class="nav-link dropdown-toggle" runat="server" href="~/Ventas">Ventas</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" runat="server" href="~/HistorialVenta.aspx">Historial</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Usuarios">Usuarios</a></li>
 
 

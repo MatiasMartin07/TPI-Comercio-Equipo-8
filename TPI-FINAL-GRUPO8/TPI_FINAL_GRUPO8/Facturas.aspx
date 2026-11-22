@@ -1,18 +1,17 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Facturas.aspx.cs" Inherits="TPI_FINAL_GRUPO8.Facturas" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    
+
+    <div class="d-flex justify-content-end gap-2 mb-4 d-print-none">
+        <a href="HistorialVenta.aspx" class="btn btn-outline-secondary btn-sm">Historial Venta</a>
+        <a href="Ventas.aspx" class="btn btn-outline-success btn-sm">Nueva Venta</a>
+    </div>
+
     <div class="container my-5">
         <div class="card shadow border mx-auto bg-white" style="max-width: 800px; min-height: 1000px;">
         <div class="d-flex align-items-center gap-2">
             <asp:Label ID="lblEstadoAnulada" runat="server" Text="ANULADA" CssClass="badge bg-danger fs-6" Visible="false" />
         </div>
         <div class="card-body p-4 p-md-5">
-            
-            <div class="d-flex justify-content-end gap-2 mb-4 d-print-none">
-                <a href="HistorialVenta.aspx" class="btn btn-outline-secondary btn-sm">Historial Venta</a>
-                <a href="Ventas.aspx" class="btn btn-outline-success btn-sm">Nueva Venta</a>
-            </div>
-
             <div class="row mb-4">
                 <div class="col-sm-6">
                     <h3 class="text-dark fw-bold mb-3">Comprobante de Venta</h3>

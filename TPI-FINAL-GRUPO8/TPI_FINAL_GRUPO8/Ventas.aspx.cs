@@ -17,6 +17,7 @@ namespace TPI_FINAL_GRUPO8
             txtPrecio.Enabled = false;
             txtSubtotal.Enabled = false;
             txtNroFactura.Enabled = false;
+            txtIdProducto.Enabled = false;
 
             if (!IsPostBack)
             {
@@ -175,7 +176,7 @@ namespace TPI_FINAL_GRUPO8
 
             if (encontrado == null)
             {
-                lblErrorProducto.Text = "No se encontró ese producto.";
+                lblErrorProducto.Text = "No se encontró el producto o se encuentra inactivo";
                 txtIdProducto.Text = string.Empty;
                 txtPrecio.Text = string.Empty;
                 Session.Remove("ExisteProducto");
@@ -198,6 +199,12 @@ namespace TPI_FINAL_GRUPO8
         {
             try
             {
+                if (!string.IsNullOrEmpty(txtCantidad.Text))
+                {
+                    lblErrorCantidad.Text = string.Empty;
+                    txtCantidad.BorderColor = System.Drawing.Color.Gray;
+                }
+
                 decimal precio = decimal.Parse(txtPrecio.Text);
                 int cantidad = int.Parse(txtCantidad.Text);
                 decimal total = 0;
@@ -251,6 +258,19 @@ namespace TPI_FINAL_GRUPO8
                 detalle.Producto = new Producto();
                 detalle.Producto.IdProducto = id;
                 detalle.NombreProducto = txtNombreProducto.Text;
+
+                if(!int.TryParse(txtCantidad.Text, out cantidad) || cantidad < 0)
+                {
+                    lblErrorCantidad.Text ="Ingrese una cantidad mayor a 0";
+                    txtCantidad.BorderColor = System.Drawing.Color.Red;
+                    txtSubtotal.Text = string.Empty;
+                    return;
+                }
+                else
+                {
+                    lblErrorCantidad.Text = "";
+                }
+
                 detalle.Cantidad = cantidad;
                 detalle.PrecioUnitario = precio;
                 detalle.SubTotal = cantidad * precio;

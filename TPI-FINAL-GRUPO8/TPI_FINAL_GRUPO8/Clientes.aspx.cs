@@ -35,9 +35,36 @@ namespace TPI_FINAL_GRUPO8
 
         protected void txtFiltro_TextChanged(object sender, EventArgs e)
         {
-            List<Cliente> lista = (List<Cliente>)Session["listaCliente"];
-            List<Cliente> listaFiltrada = lista.FindAll(x => x.Dni.ToUpper().Contains(txtFiltro.Text.ToUpper()));
-            gvClientes.DataSource = listaFiltrada;
+            AplicarFiltros();
+        }
+
+        protected void ddlEstadoCliente_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AplicarFiltros();
+        }
+        private void AplicarFiltros()
+        {
+            List<Cliente> lista = Session["listaCliente"] as List<Cliente>;
+            if (lista == null)
+                return;
+
+            string filtroTexto = txtFiltro.Text.Trim().ToUpper();
+            string estado = ddlEstadoCliente.SelectedValue;
+
+            List<Cliente> filtrada = lista.Where(x =>
+            {
+                bool coincideTexto = string.IsNullOrEmpty(filtroTexto) || (!string.IsNullOrEmpty(x.Dni) && x.Dni.ToUpper().Contains(filtroTexto));
+
+                bool coincideEstado = true;
+                if (estado == "Activos")
+                    coincideEstado = x.Activo;
+                else if (estado == "Inactivos")
+                    coincideEstado = !x.Activo;
+
+                return coincideTexto && coincideEstado;
+            }).ToList();
+
+            gvClientes.DataSource = filtrada;
             gvClientes.DataBind();
         }
     }

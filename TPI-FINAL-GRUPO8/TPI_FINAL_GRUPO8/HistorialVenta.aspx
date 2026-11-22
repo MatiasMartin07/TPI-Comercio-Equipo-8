@@ -1,10 +1,23 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="HistorialVenta.aspx.cs" Inherits="TPI_FINAL_GRUPO8.HistorialVenta" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2 class="text-center">Historial de Ventas</h2>
+    <h2 class="text-center" style="color: #6ea8fe;">Historial de Ventas</h2>
+
+    <div class="mb-3">
+    <asp:Label runat="server" Text="Buscar" AssociatedControlID="txtFiltro" CssClass="form-label"></asp:Label>
+    <div class="d-flex align-items-end gap-2">
+        <asp:TextBox ID="txtFiltro" runat="server" CssClass="form-control flex-grow-1" placeholder="Buscar por Nro Factura, Cliente,..." AutoPostBack="true" OnTextChanged="txtFiltro_TextChanged"></asp:TextBox>
+
+        <asp:DropDownList ID="ddlEstadoVenta" runat="server" CssClass="form-select" Style="max-width: 150px;" AutoPostBack="true" OnSelectedIndexChanged="ddlEstadoVenta_SelectedIndexChanged" >
+            <asp:ListItem Text="Todos" Value="Todos" />
+            <asp:ListItem Text="Activos" Value="Activos" />
+            <asp:ListItem Text="Anulados" Value="Anulados" />
+        </asp:DropDownList>
+    </div>
+</div>
 
     <asp:GridView ID="gvVentas" runat="server" CssClass="table table-striped table-bordered" AutoGenerateColumns="false"
-        DataKeyNames="Id" OnRowCommand="gvVentas_RowCommand" ShowHeaderWhenEmpty="true" >
+        DataKeyNames="Id" OnRowCommand="gvVentas_RowCommand" ShowHeaderWhenEmpty="true" EmptyDataText="No hay ventas para mostrar..." >
         <Columns>
             <asp:BoundField HeaderText="Fecha" DataField="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
             <asp:BoundField HeaderText="Factura" DataField="NroFactura" />

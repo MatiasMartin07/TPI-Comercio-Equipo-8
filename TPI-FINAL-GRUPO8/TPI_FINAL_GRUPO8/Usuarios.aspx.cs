@@ -32,5 +32,39 @@ namespace TPI_FINAL_GRUPO8
         {
             Response.Redirect("FormUsuario.aspx", false);
         }
+
+        protected void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            cargarUsuario();
+        }
+
+        protected void ddlEstadoCliente_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cargarUsuario();
+        }
+
+        private void cargarUsuario()
+        {
+            UsuarioNegocio negocio = new UsuarioNegocio();
+            var usuario = negocio.listar();
+
+            string filtro = txtFiltro.Text.Trim();
+            string estado = ddlEstadoUsuario.SelectedValue;
+            bool filtrarEstado = estado != "Todos";
+
+            if(filtro.Length > 0)
+            {
+                usuario = usuario.FindAll(usuarios => usuarios.Rol.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >=0 ||
+                usuarios.Nombre.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >=0 );
+            }
+            if (filtrarEstado)
+            {
+                bool mostrarActivos = estado == "Activos";
+                usuario = usuario.FindAll(usuarios => usuarios.Activo == mostrarActivos);
+            }
+
+            gvUsuario.DataSource = usuario;
+            gvUsuario.DataBind();
+        }
     }
 }
