@@ -76,7 +76,7 @@ Create table Venta(
    IdCliete int not null foreign key references Cliente(Id),
    fecha datetime not null,
    NroFactura varchar(100) not null,
-   Total decimal not null,
+   Total decimal(10,2) not null,
    Anulado bit not null default 0
 )
 go
@@ -87,10 +87,9 @@ Create table DetalleVenta(
     IdProducto int not null foreign key references Producto(IdProducto),
     IdVenta int not null foreign key references Venta(Id),
     Cantidad int not null,
-    PrecioUnitario decimal not null,
-    SubTotal decimal not null
+    PrecioUnitario decimal(10, 2) not null,
+    SubTotal decimal(10, 2) not null
 )
-
 
 
 
@@ -390,7 +389,7 @@ Create procedure sp_AgregarVenta
 @idCliente int,
 @fecha datetime,
 @nroFactura varchar(100),
-@total decimal
+@total decimal(10,2)
 as
 begin
    Insert into Venta (IdCliete,fecha,NroFactura,Total)
@@ -429,8 +428,8 @@ Create procedure sp_AgregarDetalleVenta
 @idProducto int,
 @idVenta int,
 @cantidad int,
-@precioUnitario decimal,
-@subTotal decimal
+@precioUnitario decimal(10,2),
+@subTotal decimal (10,2)
 as
 begin
   Insert into DetalleVenta (IdProducto,IdVenta,Cantidad,PrecioUnitario,SubTotal)

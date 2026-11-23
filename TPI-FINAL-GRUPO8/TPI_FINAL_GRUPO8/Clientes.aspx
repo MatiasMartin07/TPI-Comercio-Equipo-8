@@ -7,7 +7,7 @@
 <div class="mb-3">
     <asp:Label runat="server" Text="Buscar" AssociatedControlID="txtFiltro" CssClass="form-label"></asp:Label>
     <div class="d-flex align-items-end gap-2">
-        <asp:TextBox ID="txtFiltro" runat="server" CssClass="form-control flex-grow-1" placeholder="Buscar por DNI/CUIT..." AutoPostBack="true" OnTextChanged="txtFiltro_TextChanged"></asp:TextBox>
+        <asp:TextBox ID="txtFiltro" runat="server" CssClass="form-control flex-grow-1" placeholder="Buscar por DNI/CUIT o Nombre" AutoPostBack="true" OnTextChanged="txtFiltro_TextChanged"></asp:TextBox>
 
         <asp:DropDownList ID="ddlEstadoCliente" runat="server" CssClass="form-select" Style="max-width: 150px;" AutoPostBack="true" OnSelectedIndexChanged="ddlEstadoCliente_SelectedIndexChanged">
             <asp:ListItem Text="Todos" Value="Todos" />

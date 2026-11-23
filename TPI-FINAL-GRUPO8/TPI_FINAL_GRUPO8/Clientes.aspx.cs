@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 using Dominio;
 
 namespace TPI_FINAL_GRUPO8
-{
+{     
     public partial class Clientes : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -44,27 +44,26 @@ namespace TPI_FINAL_GRUPO8
         }
         private void AplicarFiltros()
         {
-            List<Cliente> lista = Session["listaCliente"] as List<Cliente>;
-            if (lista == null)
+            List<Cliente> cliente = Session["listaCliente"] as List<Cliente>;
+            if (cliente == null)
                 return;
 
-            string filtroTexto = txtFiltro.Text.Trim().ToUpper();
+            string filtro = txtFiltro.Text.Trim().ToUpper();
             string estado = ddlEstadoCliente.SelectedValue;
+            bool filtrarEstado = estado != "Todos";
 
-            List<Cliente> filtrada = lista.Where(x =>
+            if(filtro.Length > 0)
             {
-                bool coincideTexto = string.IsNullOrEmpty(filtroTexto) || (!string.IsNullOrEmpty(x.Dni) && x.Dni.ToUpper().Contains(filtroTexto));
+                cliente = cliente.FindAll(clientes => clientes.Dni.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0
+                || clientes.Nombre.IndexOf(filtro,StringComparison.OrdinalIgnoreCase) >=0);
+            }
+            if (filtrarEstado)
+            {
+                bool mostrarActivos = estado == "Activos";
+                cliente = cliente.FindAll(clientes => clientes.Activo == mostrarActivos);
+            }
 
-                bool coincideEstado = true;
-                if (estado == "Activos")
-                    coincideEstado = x.Activo;
-                else if (estado == "Inactivos")
-                    coincideEstado = !x.Activo;
-
-                return coincideTexto && coincideEstado;
-            }).ToList();
-
-            gvClientes.DataSource = filtrada;
+            gvClientes.DataSource = cliente;
             gvClientes.DataBind();
         }
     }

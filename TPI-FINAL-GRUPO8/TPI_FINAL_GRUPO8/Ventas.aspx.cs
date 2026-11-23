@@ -31,9 +31,9 @@ namespace TPI_FINAL_GRUPO8
                 VentaNegocio negocio = new VentaNegocio();
                 txtNroFactura.Text = negocio.ObtenerSiguienteNumeroFactura();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                txtNroFactura.Text = "Error: a cargar la factura";
+                txtNroFactura.Text = "Error: al cargar la factura";
             }
         }
 
@@ -41,10 +41,13 @@ namespace TPI_FINAL_GRUPO8
         {
             try
             {
-                if (!string.IsNullOrEmpty(txtDni.Text))
+                if (string.IsNullOrEmpty(txtDni.Text))
                 {
                     lblErrorDni.Text = string.Empty;
                     txtDni.BorderColor = System.Drawing.Color.Gray;
+                    txtNombre.Text = string.Empty;
+                    Session["clienteEncontrado"] = null;
+                    return;
                 }
                 ClienteNegocio negocio = new ClienteNegocio();
                 Cliente cliente = negocio.buscarDni(txtDni.Text);
@@ -53,7 +56,7 @@ namespace TPI_FINAL_GRUPO8
                 {
                     if (!cliente.Activo)
                     {
-                        lblErrorDni.Text = "El cliente se encuantra Inactivo";
+                        lblErrorDni.Text = "El cliente se encuentra Inactivo";
                         txtDni.BorderColor = System.Drawing.Color.Red;
                         txtNombre.Text = string.Empty;
                         Session["clienteEncontrado"] = null;
@@ -179,6 +182,7 @@ namespace TPI_FINAL_GRUPO8
                 lblErrorProducto.Text = "No se encontró el producto o se encuentra inactivo";
                 txtIdProducto.Text = string.Empty;
                 txtPrecio.Text = string.Empty;
+                txtNombreProducto.Text = string.Empty;
                 Session.Remove("ExisteProducto");
                 return;
             }
@@ -237,16 +241,16 @@ namespace TPI_FINAL_GRUPO8
         {
             try
             {
-                if (string.IsNullOrEmpty(txtIdProducto.Text))
+                if (string.IsNullOrEmpty(txtNombreProducto.Text))
                 {
-                    lblErrorId.Text = "Ingresar el Id Producto";
-                    txtIdProducto.BorderColor = System.Drawing.Color.Red;
+                    lblErrorProducto.Text = "Ingresar el Producto";
+                    txtNombreProducto.BorderColor = System.Drawing.Color.Red;
                     return;
                 }
                 else
                 {
-                    txtIdProducto.BorderColor = System.Drawing.Color.Empty;
-                    lblErrorId.Text = "";
+                    txtNombreProducto.BorderColor = System.Drawing.Color.Empty;
+                    lblErrorProducto.Text = "";
                 }
 
                 // cargar los productos
@@ -259,10 +263,11 @@ namespace TPI_FINAL_GRUPO8
                 detalle.Producto.IdProducto = id;
                 detalle.NombreProducto = txtNombreProducto.Text;
 
-                if(!int.TryParse(txtCantidad.Text, out cantidad) || cantidad < 0)
+                if(!int.TryParse(txtCantidad.Text, out cantidad) || cantidad <= 0)
                 {
                     lblErrorCantidad.Text ="Ingrese una cantidad mayor a 0";
                     txtCantidad.BorderColor = System.Drawing.Color.Red;
+                    txtCantidad.Text = string.Empty;
                     txtSubtotal.Text = string.Empty;
                     return;
                 }
@@ -290,7 +295,7 @@ namespace TPI_FINAL_GRUPO8
                 }
                 if (producto == null || (cantidadProductos + cantidad) > producto.StockActual)
                 {
-                    lblErrorId.Text = "No hay stock suficiente ";
+                    lblErrorProducto.Text = "No hay stock suficiente ";
                     txtIdProducto.Text = string.Empty;
                     txtNombreProducto.Text = string.Empty;
                     txtCantidad.Text = string.Empty;

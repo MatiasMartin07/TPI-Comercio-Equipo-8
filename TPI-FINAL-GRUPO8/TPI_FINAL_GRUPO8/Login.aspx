@@ -10,7 +10,7 @@
                     <asp:TextBox ID="txtUsuario" runat="server" placeholder="Usuario" CssClass="form-control"
                         AutoPostBack="true" OnTextChanged="txtUsuario_TextChanged"
                         ></asp:TextBox>
-                    <asp:Label ID="lblError" runat="server"></asp:Label>
+                    <asp:Label ID="lblError" runat="server" CssClass="text-danger small"></asp:Label>
                 </div>
 
                 <div class="mb-3">
