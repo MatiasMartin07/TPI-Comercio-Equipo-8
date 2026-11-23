@@ -1,2 +1,5 @@
 .vs/
 obj/
+
+# Credenciales locales de correo
+TPI-FINAL-GRUPO8/TPI_FINAL_GRUPO8/Correo.local.config
