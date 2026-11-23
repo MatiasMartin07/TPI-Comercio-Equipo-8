@@ -2,9 +2,9 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="inicio-banner d-flex align-items-center justify-content-between gap-3
-    bg-primary bg-opacity-10 border border-primary border-opacity-25
-    rounded p-4 p-xl-5">
+    <div class="con-costados inicio-banner d-flex align-items-center justify-content-between gap-3
+bg-primary bg-opacity-10 border border-primary border-opacity-25
+rounded p-4 p-xl-5">
 
         <div>
             <h1 class="h2 fw-semibold mb-2">Bienvenida a Gestión Comercial

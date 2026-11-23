@@ -100,24 +100,40 @@ main > div:has(> .listado-catalogo),
     top: 20px;
 }
 
-/* Fondo azul visible a los costados de Inicio */
-body:has(.inicio-banner) {
-    background-color: #2563c4;
+/* Valores compartidos por las pantallas con costados */
+:root {
+    --costados-color: #2563c4;
+    --costados-ancho-centro: 76%;
+    --costados-relleno: 24px;
 }
 
-/* Centro blanco de Inicio; Bootstrap controla su ancho */
-.body-content:has(.inicio-banner) {
+/* Fondo azul cuando la pantalla contiene con-costados */
+body:has(.con-costados) {
+    background-color: var(--costados-color);
+}
+
+/* Centro blanco del contenido */
+.body-content:has(.con-costados) {
     background-color: white;
     margin-top: 0;
     padding-top: 15px;
-    padding-left: 24px;
-    padding-right: 24px;
+    padding-left: var(--costados-relleno);
+    padding-right: var(--costados-relleno);
 }
 
-/* Alinear el contenido del menú con el centro blanco */
-body:has(.inicio-banner) .navbar > .container {
-    padding-left: 24px;
-    padding-right: 24px;
+/* Alinear el menú con el contenido */
+body:has(.con-costados) .navbar > .container {
+    padding-left: var(--costados-relleno);
+    padding-right: var(--costados-relleno);
+}
+
+/* Ancho compartido en pantallas grandes */
+@media (min-width: 1200px) {
+    .body-content:has(.con-costados),
+    body:has(.con-costados) .navbar > .container {
+        width: var(--costados-ancho-centro);
+        max-width: none;
+    }
 }
 
 /* Aumentar la altura mínima de los accesos desde 992 px */
@@ -196,4 +212,51 @@ body:has(.inicio-banner) .navbar > .container {
     width: 12px;
     height: 8px;
     border-radius: 2px;
+}
+
+/* Borde izquierdo de los banners de los módulos */
+.banner-modulo {
+    border-left: 5px solid var(--bs-primary) !important;
+}
+
+
+
+/* Centro blanco; Bootstrap adapta el ancho a cada pantalla */
+.body-content:has(.banner-modulo) {
+    background-color: white;
+    margin-top: 0;
+    padding-top: 15px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+/* Alinear el menú con el contenido */
+body:has(.banner-modulo) .navbar > .container {
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+/* Ancho del centro y del menú, conservando costados azules */
+@media (min-width: 1200px) {
+    .body-content:has(.banner-modulo),
+    body:has(.banner-modulo) .navbar > .container {
+        width: 76%;
+        max-width: none;
+    }
+}
+
+/* Los campos del formulario de Producto usan el ancho disponible */
+.formulario-producto .form-control,
+.formulario-producto .form-select {
+    max-width: none;
+}
+
+/* Altura de la vista previa de la imagen del producto */
+.formulario-producto .producto-vista-previa {
+    height: 280px;
+}
+
+/* Permitir que el campo de URL se reduzca junto al botón */
+.formulario-producto .form-control {
+    min-width: 0;
 }

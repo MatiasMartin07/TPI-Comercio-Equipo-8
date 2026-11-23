@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Marcas" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Marcas.aspx.cs" Inherits="TPI_FINAL_GRUPO8.Marcas" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 bg-light border border-bottom-0 rounded-top px-3 py-2">
+    <div class="con-costados d-flex flex-wrap justify-content-between align-items-center gap-2 bg-light border border-bottom-0 rounded-top px-3 py-2">
         <h1 class="h4 mb-0">Lista de marcas</h1>
         <a href="FormMarca.aspx" class="btn btn-primary btn-sm">+ Nueva marca</a>
     </div>
