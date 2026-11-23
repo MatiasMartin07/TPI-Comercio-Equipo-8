@@ -260,3 +260,16 @@ body:has(.banner-modulo) .navbar > .container {
 .formulario-producto .form-control {
     min-width: 0;
 }
+
+/* Ancho y centrado de formularios con pocos campos */
+.formulario-simple {
+    width: 100%;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Separación entre el banner y la tarjeta del formulario */
+.formulario-simple-datos {
+    margin-top: 80px;
+}
