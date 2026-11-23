@@ -135,12 +135,12 @@ body:has(.inicio-banner) .navbar > .container {
     padding-bottom: 0 !important;
 }
 
-    /* Extender el contenedor del banner y los módulos */
-    .body-content:has(.inicio-banner) > main > div {
+/* Extender el contenedor del banner y los módulos */
+.body-content:has(.inicio-banner) > main > div {
         display: flex;
         flex-direction: column;
         flex-grow: 1;
-    }
+}
 
 /* Centrar los módulos en el espacio disponible debajo del banner */
 .inicio-modulos {
@@ -150,4 +150,50 @@ body:has(.inicio-banner) .navbar > .container {
     flex-grow: 1;
     padding-top: 24px;
     padding-bottom: 24px;
+}
+
+/* Distribuir el nombre y las barras de cada producto */
+.inicio-stock-fila {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+    .inicio-stock-fila > span {
+        overflow-wrap: anywhere;
+    }
+
+/* Separar cada barra de su valor numérico */
+.inicio-stock-medida {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 32px;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+}
+
+    .inicio-stock-medida + .inicio-stock-medida {
+        margin-top: 4px;
+    }
+
+/* Fondo y altura de las barras */
+.inicio-stock-pista {
+    height: 8px;
+    background-color: #eef1f5;
+    border-radius: 2px;
+}
+
+.inicio-stock-barra {
+    height: 100%;
+    border-radius: 2px;
+}
+
+/* Muestras de color de la leyenda */
+.inicio-stock-referencia {
+    display: inline-block;
+    width: 12px;
+    height: 8px;
+    border-radius: 2px;
 }
