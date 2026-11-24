@@ -55,7 +55,7 @@
                 <div class="card-body p-4">
                     <div class="row g-3">
                         <div class="col-12 col-md-4">
-                            <asp:Label ID="lblIdProducto" runat="server" Text="Producto" CssClass="form-label text-muted small"></asp:Label>
+                            <asp:Label ID="lblIdProducto" runat="server" Text="Id" CssClass="form-label text-muted small"></asp:Label>
                             <asp:TextBox ID="txtIdProducto" runat="server" placeholder="Id del Producto" CssClass="form-control" OnTextChanged="txtIdProducto_TextChanged" AutoPostBack="true"></asp:TextBox>
                             <asp:Label ID="lblErrorId" runat="server" CssClass="text-danger fw-bold small mt-1 d-block"></asp:Label>
                         </div>
@@ -72,7 +72,8 @@
 
                         <div class="col-12 col-md-4">
                             <asp:Label ID="lblCantidad" runat="server" Text="Cantidad" CssClass="form-label text-muted small"></asp:Label>
-                            <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control" placeholder="0" TextMode="Number" min="0" step="1" OnTextChanged="txtCantidad_TextChanged" AutoPostBack="true"></asp:TextBox>
+                            <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control" placeholder="0" TextMode="Number"  OnTextChanged="txtCantidad_TextChanged" AutoPostBack="true"></asp:TextBox>
+                            <asp:Label ID="lblErrorCantidad" runat="server" CssClass="text-danger small mt-1 d-block" ></asp:Label>
                         </div>
 
                         <div class="col-12 col-md-4">

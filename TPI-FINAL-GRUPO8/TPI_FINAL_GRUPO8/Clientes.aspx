@@ -2,16 +2,23 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2 class="text-center">Lista de Clientes</h2>
-    <div class="mb-3">
-        <%-- FILTRO RAPIDO  --%>
-        <asp:Label runat="server" Text="Filtrar"></asp:Label>
-        <asp:TextBox ID="txtFiltro" runat="server" CssClass="form-control" placeholder="Buscar por DNI/CUIT..." AutoPostBack="true" OnTextChanged="txtFiltro_TextChanged"></asp:TextBox>
-    </div>
+<h2 class="text-center" style="color: #6ea8fe;">Lista de Clientes</h2>
 
+<div class="mb-3">
+    <asp:Label runat="server" Text="Buscar" AssociatedControlID="txtFiltro" CssClass="form-label"></asp:Label>
+    <div class="d-flex align-items-end gap-2">
+        <asp:TextBox ID="txtFiltro" runat="server" CssClass="form-control flex-grow-1" placeholder="Buscar por DNI/CUIT o Nombre" AutoPostBack="true" OnTextChanged="txtFiltro_TextChanged"></asp:TextBox>
+
+        <asp:DropDownList ID="ddlEstadoCliente" runat="server" CssClass="form-select" Style="max-width: 150px;" AutoPostBack="true" OnSelectedIndexChanged="ddlEstadoCliente_SelectedIndexChanged">
+            <asp:ListItem Text="Todos" Value="Todos" />
+            <asp:ListItem Text="Activos" Value="Activos" />
+            <asp:ListItem Text="Inactivos" Value="Inactivos" />
+        </asp:DropDownList>
+    </div>
+</div>
     <asp:GridView ID="gvClientes" runat="server" AutoGenerateColumns="false"
         CssClass="table table-striped" OnSelectedIndexChanged="gvClientes_SelectedIndexChanged"
-        DataKeyNames="Id">
+        DataKeyNames="Id" EmptyDataText="No hay Clientes para mostrar " >
         <Columns>
             <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
             <asp:BoundField HeaderText="Apellido" DataField="Apellido" />

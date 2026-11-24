@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 using Dominio;
 
 namespace TPI_FINAL_GRUPO8
-{
+{     
     public partial class Clientes : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -35,9 +35,35 @@ namespace TPI_FINAL_GRUPO8
 
         protected void txtFiltro_TextChanged(object sender, EventArgs e)
         {
-            List<Cliente> lista = (List<Cliente>)Session["listaCliente"];
-            List<Cliente> listaFiltrada = lista.FindAll(x => x.Dni.ToUpper().Contains(txtFiltro.Text.ToUpper()));
-            gvClientes.DataSource = listaFiltrada;
+            AplicarFiltros();
+        }
+
+        protected void ddlEstadoCliente_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AplicarFiltros();
+        }
+        private void AplicarFiltros()
+        {
+            List<Cliente> cliente = Session["listaCliente"] as List<Cliente>;
+            if (cliente == null)
+                return;
+
+            string filtro = txtFiltro.Text.Trim().ToUpper();
+            string estado = ddlEstadoCliente.SelectedValue;
+            bool filtrarEstado = estado != "Todos";
+
+            if(filtro.Length > 0)
+            {
+                cliente = cliente.FindAll(clientes => clientes.Dni.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0
+                || clientes.Nombre.IndexOf(filtro,StringComparison.OrdinalIgnoreCase) >=0);
+            }
+            if (filtrarEstado)
+            {
+                bool mostrarActivos = estado == "Activos";
+                cliente = cliente.FindAll(clientes => clientes.Activo == mostrarActivos);
+            }
+
+            gvClientes.DataSource = cliente;
             gvClientes.DataBind();
         }
     }

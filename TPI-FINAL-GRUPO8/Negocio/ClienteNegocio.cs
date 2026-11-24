@@ -43,47 +43,6 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-        public List<Cliente> filtrar(string filtro, string campo)
-        {
-            List<Cliente> lista = new List<Cliente>();
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                string consulta = "select Id, Dni, Nombre, Apellido,Email, Activo from Clientes ";
-
-                if (campo == "Dni")
-                {
-                    consulta += "WHERE Dni LIKE '" + filtro + "%'";
-                }
-                // Por ahora solo busca por dni o cuit
-
-                datos.setearConsulta(consulta);
-                datos.ejecutarLectura();
-
-                while (datos.Lector.Read())
-                {
-                    Cliente aux = new Cliente();
-
-                    aux.Id = (int)datos.Lector["Id"];
-                    aux.Dni = (string)datos.Lector["Dni"];
-                    aux.Nombre = (string)datos.Lector["Nombre"];
-                    aux.Apellido = (string)datos.Lector["Apellido"];
-                    aux.Email = (string)datos.Lector["Email"];
-                    aux.Activo = (bool)datos.Lector["Activo"];
-
-                    lista.Add(aux);
-                }
-                return lista;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
         public Cliente listarId(string id = "")
         {
             Cliente cliente = new Cliente();

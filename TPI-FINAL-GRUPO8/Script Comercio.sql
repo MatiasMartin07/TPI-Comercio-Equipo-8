@@ -93,7 +93,6 @@ Create table DetalleVenta(
 
 
 
-
 ---Carga de datos---
 INSERT INTO Marca (Nombre)
 VALUES ('Cabrales'),
