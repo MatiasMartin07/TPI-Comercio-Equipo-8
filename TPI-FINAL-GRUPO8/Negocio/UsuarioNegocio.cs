@@ -193,6 +193,36 @@ namespace Negocio
 
         }
 
+        public Usuario loguear(string nombreUsuario, string pass)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("select Id, Rol,Activo from Usuario where NombreUsuario = @nombreUsuario and Pass = @pass ");
+                datos.setearParametro("@nombreUsuario", nombreUsuario);
+                datos.setearParametro("@pass", pass);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Usuario usuario = new Usuario();
+                    usuario.Id = (int)datos.Lector["Id"];
+                    usuario.Rol = (string)datos.Lector["Rol"];
+                    usuario.Activo = (bool)datos.Lector["Activo"];
+                    return usuario;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
 
 
     }

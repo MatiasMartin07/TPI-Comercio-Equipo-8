@@ -19,7 +19,7 @@
         <span class="display-3 flex-shrink-0" aria-hidden="true">📦</span>
     </div>
     <div class="d-flex justify-content-end mb-3">
-        <a href="FormProducto.aspx" class="btn btn-primary">+ Nuevo producto
+        <a id="aNuevoProducto" runat="server" href="FormProducto.aspx" class="btn btn-primary">+ Nuevo producto
     </a>
     </div>
     <div class="border border-bottom-0 rounded-top bg-light p-3">
@@ -64,6 +64,7 @@
             AutoGenerateColumns="false"
             ShowHeaderWhenEmpty="true"
             CssClass="table table-striped align-middle"
+            OnRowDataBound="gvProductos_RowDataBound"
             EmptyDataText="No hay productos para mostrar.">
             <EmptyDataRowStyle CssClass="listado-sin-resultados" />
             <Columns>
@@ -107,7 +108,7 @@
                 <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="ps-4"
                     ItemStyle-CssClass="ps-4">
                     <ItemTemplate>
-                        <asp:HyperLink runat="server"
+                        <asp:HyperLink ID="idEditar" runat="server"
                             Text="Editar"
                             NavigateUrl='<%# Eval("IdProducto", "FormProducto.aspx?id={0}") %>'
                             CssClass="btn btn-outline-primary btn-sm" />

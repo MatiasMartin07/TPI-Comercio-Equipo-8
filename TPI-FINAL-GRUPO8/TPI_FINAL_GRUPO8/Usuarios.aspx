@@ -1,7 +1,21 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Usuarios.aspx.cs" Inherits="TPI_FINAL_GRUPO8.Usuarios" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2 class="text-center" style="color: #6ea8fe;">Lista de Usuarios</h2>
+    <div class="con-costados banner-modulo d-flex align-items-center
+    justify-content-between gap-3 bg-primary bg-opacity-10
+    border border-primary border-opacity-25 rounded
+    p-4 p-xl-5 mb-4">
+
+        <div>
+            <h1 class="h2 fw-semibold mb-2">Usuarios</h1>
+
+            <p class="text-secondary mb-0">
+                Listado general de usuario activos e inactivos del sistema
+            </p>
+        </div>
+
+        <span class="display-3 flex-shrink-0" aria-hidden="true"> 👤</span>
+    </div>
 
     <div class="mb-3">
     <asp:Label runat="server" Text="Buscar" AssociatedControlID="txtFiltro" CssClass="form-label"></asp:Label>

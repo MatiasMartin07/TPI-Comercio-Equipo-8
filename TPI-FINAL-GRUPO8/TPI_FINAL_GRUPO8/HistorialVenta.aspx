@@ -57,7 +57,7 @@
     </div>
     <div class="table-responsive border border-top-0 rounded-bottom">
         <asp:GridView ID="gvVentas" runat="server" CssClass="table table-striped table-bordered align-middle mb-0" AutoGenerateColumns="false"
-            DataKeyNames="Id" OnRowCommand="gvVentas_RowCommand" ShowHeaderWhenEmpty="true" EmptyDataText="No hay ventas para mostrar...">
+    DataKeyNames="Id" OnRowCommand="gvVentas_RowCommand" OnRowDataBound="gvVentas_RowDataBound" ShowHeaderWhenEmpty="true" EmptyDataText="No hay ventas para mostrar...">
             <Columns>
                 <asp:BoundField HeaderText="Fecha" DataField="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
                 <asp:BoundField HeaderText="Factura" DataField="NroFactura" />
@@ -68,7 +68,7 @@
                         <asp:Button runat="server" Text="Ver Factura" CssClass="btn btn-outline-success btn-sm"
                             CommandName="VerFactura"
                             CommandArgument='<%# Eval("Id") %>' />
-                        <asp:Button runat="server" Text="Anular" CssClass="btn btn-outline-danger btn-sm" CommandName="AnularVenta" CommandArgument='<%# Eval("Id") %>'
+                        <asp:Button ID="btnAnular" runat="server" Text="Anular" CssClass="btn btn-outline-danger btn-sm" CommandName="AnularVenta" CommandArgument='<%# Eval("Id") %>'
                             Visible='<%# !Convert.ToBoolean(Eval("Anulado")) %>' OnClientClick="return confirm('¿Seguro que querés anular esta venta? Se devolvera el Stock');" />
                         <asp:Label runat="server" Text="Anulado" CssClass="badge bg-danger" Visible='<%# Convert.ToBoolean(Eval("Anulado")) %>'></asp:Label>
                     </ItemTemplate>

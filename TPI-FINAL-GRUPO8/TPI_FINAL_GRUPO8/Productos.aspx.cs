@@ -1,4 +1,5 @@
-﻿using Negocio;
+﻿using Dominio;
+using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,14 @@ namespace TPI_FINAL_GRUPO8
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Usuario usuario = Session["usuarioLogueado"] as Usuario;
+            if (usuario == null)
+            {
+                Response.Redirect("Login.aspx", false);
+                return;
+            }
+            aNuevoProducto.Visible = usuario.Rol == "Administrador";
+
             if (!IsPostBack)
             {
                 CargarProductos();
@@ -57,6 +66,20 @@ namespace TPI_FINAL_GRUPO8
 
             gvProductos.DataSource = productos;
             gvProductos.DataBind();
+        }
+
+        protected void gvProductos_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Usuario usuario = Session["usuarioLogueado"] as Usuario;
+                HyperLink idEditar = e.Row.FindControl("idEditar") as HyperLink;
+
+                if (idEditar != null)
+                {
+                    idEditar.Visible = usuario != null && usuario.Rol == "Administrador";
+                }
+            }
         }
     }
 }

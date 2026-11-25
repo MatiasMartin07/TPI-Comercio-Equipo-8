@@ -14,6 +14,13 @@ namespace TPI_FINAL_GRUPO8
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Usuario usuario = Session["usuarioLogueado"] as Usuario;
+            if (usuario == null)
+            {
+                Response.Redirect("Login.aspx", false);
+                return;
+            }
+
             if (!IsPostBack)
             {
                 VentaNegocio negocio = new VentaNegocio();
@@ -92,6 +99,20 @@ namespace TPI_FINAL_GRUPO8
 
         }
 
+        protected void gvVentas_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                bool anulado = Convert.ToBoolean(DataBinder.Eval(e.Row.DataItem, "Anulado"));
+                Usuario usuario = Session["usuarioLogueado"] as Usuario;
+                bool esAdmin = usuario != null && usuario.Rol == "Administrador";
 
+                Control btnAnular = e.Row.FindControl("btnAnular");
+                if (btnAnular != null)
+                {
+                    btnAnular.Visible = !anulado && esAdmin;
+                }
+            }
+        }
     }
 }

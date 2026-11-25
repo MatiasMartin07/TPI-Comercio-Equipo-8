@@ -58,22 +58,22 @@
                     <ul class="navbar-nav flex-grow-1">
                         <%--<li class="nav-item"><a class="nav-link" runat="server" href="~/Inicio">Inicio</a></li>--%>
                         <li class="nav-item dropdown menu-productos">
-                            <a class="nav-link dropdown-toggle" runat="server"
+                            <a id="aProductos" class="nav-link dropdown-toggle" runat="server"
                                 href="~/Productos">Productos
                             </a>
-                            <ul class="dropdown-menu">
-                                <li>
+                            <ul id="ulSubProductos" runat="server" class="dropdown-menu">
+                                <li id="liMarca" runat="server">
                                     <a class="dropdown-item" runat="server"
                                         href="~/Marcas.aspx">Marca</a>
                                 </li>
-                                <li>
+                                <li id="liCategoria" runat="server">
                                     <a class="dropdown-item" runat="server"
                                         href="~/Categorias.aspx">Categoría</a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Proveedores">Proveedores</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Compras.aspx">Compras</a></li>
+                        <li id="liProveedores" runat="server" class="nav-item"><a class="nav-link" runat="server" href="~/Proveedores">Proveedores</a></li>
+                        <li id="liCompras" runat="server" class="nav-item"><a class="nav-link" runat="server" href="~/Compras.aspx">Compras</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Clientes">Clientes</a></li>
                         <li class="nav-item dropdown menu-ventas">
                             <a class="nav-link dropdown-toggle" runat="server" href="~/Ventas">Ventas</a>
@@ -83,12 +83,16 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Usuarios">Usuarios</a></li>
+                        <li id="liUsuarios" runat="server" class="nav-item"><a class="nav-link" runat="server" href="~/Usuarios">Usuarios</a></li>
 
 
                     </ul>
                     <div class="d-flex align-items-center">
-                        <a class="btn btn-outline-light btn-sm px-3 rounded-pill" href="Login.aspx">Login</a>
+                        <a id="idLogin" runat="server" class="btn btn-outline-light btn-sm px-3 rounded-pill" href="Login.aspx">Login</a>
+                        <asp:Label ID="lblUsuarioActual" runat="server" CssClass="text-light small me-1" Visible="false" ></asp:Label>
+                        <asp:LinkButton ID="lnkCerrarSesion" runat="server" CssClass="btn btn-outline-warning btn-sm px-3 rounded-pill"
+                           OnClick="lnkCerrarSesion_Click"
+                           Visible="false">Cerrar Sesión</asp:LinkButton>
                     </div>
                 </div>
             </div>

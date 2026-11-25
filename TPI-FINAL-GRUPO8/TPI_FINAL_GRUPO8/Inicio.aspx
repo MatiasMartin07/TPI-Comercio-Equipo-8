@@ -114,7 +114,7 @@ rounded p-4 p-xl-5">
                 </a>
             </div>
 
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div id="divMarcas" runat="server" class="col-12 col-sm-6 col-lg-4">
                 <a href="Marcas.aspx"
                     class="inicio-acceso inicio-elevar d-flex align-items-center justify-content-between gap-3 p-3 border rounded text-decoration-none h-100">
 
@@ -130,7 +130,7 @@ rounded p-4 p-xl-5">
 
             </div>
 
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div id="divCategorias" runat="server" class="col-12 col-sm-6 col-lg-4">
                 <a href="Categorias.aspx"
                     class="inicio-acceso inicio-elevar d-flex align-items-center justify-content-between gap-3 p-3 border rounded text-decoration-none h-100">
                     <span class="fs-3" aria-hidden="true">🗂️</span>
@@ -154,7 +154,7 @@ rounded p-4 p-xl-5">
                 </a>
             </div>
 
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div id="divProveedores" runat="server" class="col-12 col-sm-6 col-lg-4">
                 <a href="Proveedores.aspx"
                     class="inicio-acceso inicio-elevar d-flex align-items-center justify-content-between gap-3 p-3 border rounded text-decoration-none h-100">
                     <span class="fs-3" aria-hidden="true">🚚</span>
@@ -166,7 +166,7 @@ rounded p-4 p-xl-5">
                 </a>
             </div>
 
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div id="divCompras" runat="server" class="col-12 col-sm-6 col-lg-4">
                 <a href="Compras.aspx"
                     class="inicio-acceso inicio-elevar d-flex align-items-center justify-content-between gap-3 p-3 border rounded text-decoration-none h-100">
                     <span class="fs-3" aria-hidden="true">🛒</span>
@@ -191,7 +191,7 @@ rounded p-4 p-xl-5">
             </div>
 
             <div class="col-12 col-sm-6 col-lg-4">
-                <a href="Facturas.aspx"
+                <a href="HistorialVenta.aspx"
                     class="inicio-acceso inicio-elevar d-flex align-items-center justify-content-between gap-3 p-3 border rounded text-decoration-none h-100">
                     <span class="fs-3" aria-hidden="true">🧾</span>
                     <span class="flex-grow-1">
@@ -202,7 +202,7 @@ rounded p-4 p-xl-5">
                 </a>
             </div>
 
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div id="divUsuarios" runat="server" class="col-12 col-sm-6 col-lg-4">
                 <a href="Usuarios.aspx"
                     class="inicio-acceso inicio-elevar d-flex align-items-center justify-content-between gap-3 p-3 border rounded text-decoration-none h-100">
                     <span class="fs-3" aria-hidden="true">👤</span>

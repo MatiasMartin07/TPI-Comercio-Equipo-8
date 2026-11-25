@@ -119,7 +119,8 @@
 
             <asp:Button ID="btnInactivar" runat="server" Text="Inactivar" CssClass="btn btn-warning" OnClick="btnInactivar_Click" />
         </div>
-
+        <asp:Label ID="lblError" runat="server"
+            CssClass="text-danger small d-block mt-2" />
     </section>
 
 </asp:Content>

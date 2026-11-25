@@ -1,4 +1,5 @@
-﻿using Negocio;
+﻿using Dominio;
+using Negocio;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -9,6 +10,20 @@ namespace TPI_FINAL_GRUPO8
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Usuario usuario = Session["usuarioLogueado"] as Usuario;
+            if(usuario == null)
+            {
+                Response.Redirect("Login.aspx", false);
+                return;
+            }
+            bool esAdmin = string.Equals(usuario.Rol, "Administrador", StringComparison.OrdinalIgnoreCase);
+
+            divMarcas.Visible = esAdmin;
+            divCategorias.Visible = esAdmin;
+            divProveedores.Visible = esAdmin;
+            divCompras.Visible = esAdmin;
+            divUsuarios.Visible = esAdmin;
+
             if (!IsPostBack)
             {
                 CargarStock();
