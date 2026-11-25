@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Negocio;
+using Dominio;
 
 namespace TPI_FINAL_GRUPO8
 {
@@ -12,6 +13,18 @@ namespace TPI_FINAL_GRUPO8
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Usuario usuario = Session["usuarioLogueado"] as Usuario;
+            if (usuario == null)
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
+            if (usuario.Rol != "Administrador")
+            {
+                Response.Redirect("Inicio.aspx");
+                return;
+            }
+
             if (!IsPostBack)
             {
                 string idTexto = Request.QueryString["idCompra"];
