@@ -39,8 +39,16 @@ namespace TPI_FINAL_GRUPO8
             {
                 Response.Redirect("Facturas.aspx?id=" + idVenta);
             }
-            else if(e.CommandName == "AnularVenta")
+            else if (e.CommandName == "AnularVenta")
             {
+                Usuario usuario = Session["usuarioLogueado"] as Usuario;
+
+                if (usuario == null || usuario.Rol != "Administrador")
+                {
+                    lblError.Text = "Solo un administrador puede anular ventas.";
+                    return;
+                }
+
                 try
                 {
                     VentaNegocio negocio = new VentaNegocio();
