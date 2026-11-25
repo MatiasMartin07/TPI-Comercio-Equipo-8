@@ -300,3 +300,51 @@ body:has(.banner-modulo) .navbar > .container {
     margin-left: auto;
     white-space: normal;
 }
+
+/* Login: fondo azul, tarjeta blanca centrada y menú oculto */
+body:has(.login-pagina) .navbar {
+    display: none;
+}
+
+.body-content:has(.login-pagina) {
+    background-color: var(--costados-color);
+    width: 100%;
+    max-width: none;
+    min-height: 100vh;
+    margin-top: 0;
+    padding: 0 24px;
+}
+
+    .body-content:has(.login-pagina) > main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px 0 !important;
+    }
+
+        .body-content:has(.login-pagina) > main > div {
+            width: 100%;
+        }
+
+.login-tarjeta {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 12px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.15);
+}
+
+.login-pagina .form-control,
+.login-pagina .btn {
+    width: 100%;
+    max-width: none;
+}
+
+.body-content:has(.login-pagina) > footer {
+    color: white;
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+    .body-content:has(.login-pagina) > footer hr {
+        display: none;
+    }
