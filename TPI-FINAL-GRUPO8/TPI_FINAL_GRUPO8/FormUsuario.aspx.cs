@@ -29,6 +29,8 @@ namespace TPI_FINAL_GRUPO8
 
             if (!IsPostBack)
             {
+                bool esEdicion = int.TryParse(Request.QueryString["id"], out int idUsuario) && idUsuario > 0;
+                btnInactivar.Visible = esEdicion;
                 string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
                 if (id != "")
                 {

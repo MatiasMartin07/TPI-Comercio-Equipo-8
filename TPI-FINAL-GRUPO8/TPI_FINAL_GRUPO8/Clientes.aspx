@@ -2,22 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="con-costados banner-modulo d-flex align-items-center
-    justify-content-between gap-3 bg-primary bg-opacity-10
-    border border-primary border-opacity-25 rounded
-    p-4 p-xl-5 mb-4">
-
-        <div>
-            <h1 class="h2 fw-semibold mb-2">Clientes</h1>
-
-            <p class="text-secondary mb-0">
-                Listado general de clientes activos e inactivos del sistema.
-            </p>
-        </div>
-
-        <span class="display-3 flex-shrink-0" aria-hidden="true"> 👥</span>
-    </div>
-
+<h2 class="text-center" style="color: #6ea8fe;">Lista de Clientes</h2>
 
 <div class="mb-3">
     <asp:Label runat="server" Text="Buscar" AssociatedControlID="txtFiltro" CssClass="form-label"></asp:Label>
