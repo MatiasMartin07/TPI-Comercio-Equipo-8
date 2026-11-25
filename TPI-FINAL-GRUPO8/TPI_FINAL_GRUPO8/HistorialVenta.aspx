@@ -1,7 +1,21 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="HistorialVenta.aspx.cs" Inherits="TPI_FINAL_GRUPO8.HistorialVenta" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2 class="text-center" style="color: #6ea8fe;">Historial de Ventas</h2>
+    <div class="con-costados banner-modulo d-flex align-items-center
+    justify-content-between gap-3 bg-primary bg-opacity-10
+    border border-primary border-opacity-25 rounded
+    p-4 p-xl-5 mb-4">
+
+        <div>
+            <h1 class="h2 fw-semibold mb-2">Historial de Ventas</h1>
+
+            <p class="text-secondary mb-0">
+               Listado general de ventas realizadas, comprobantes emitidos y estados
+            </p>
+        </div>
+
+        <span class="display-3 flex-shrink-0" aria-hidden="true"> 📑</span>
+    </div>
 
     <div class="mb-3">
     <asp:Label runat="server" Text="Buscar" AssociatedControlID="txtFiltro" CssClass="form-label"></asp:Label>
@@ -17,7 +31,7 @@
 </div>
 
     <asp:GridView ID="gvVentas" runat="server" CssClass="table table-striped table-bordered" AutoGenerateColumns="false"
-        DataKeyNames="Id" OnRowCommand="gvVentas_RowCommand" ShowHeaderWhenEmpty="true" EmptyDataText="No hay ventas para mostrar..." >
+        DataKeyNames="Id" OnRowCommand="gvVentas_RowCommand" OnRowDataBound="gvVentas_RowDataBound" ShowHeaderWhenEmpty="true" EmptyDataText="No hay ventas para mostrar..." >
         <Columns>
             <asp:BoundField HeaderText="Fecha" DataField="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
             <asp:BoundField HeaderText="Factura" DataField="NroFactura" />
@@ -29,7 +43,7 @@
                       CommandName="VerFactura"
                       CommandArgument='<%# Eval("Id") %>'
                         />
-                    <asp:Button runat="server" Text="Anular" CssClass="btn btn-outline-danger btn-sm" CommandName="AnularVenta" CommandArgument='<%# Eval("Id") %>'
+                    <asp:Button ID="btnAnular" runat="server" Text="Anular" CssClass="btn btn-outline-danger btn-sm" CommandName="AnularVenta" CommandArgument='<%# Eval("Id") %>'
                         Visible='<%# !Convert.ToBoolean(Eval("Anulado")) %>' OnClientClick="return confirm('¿Seguro que querés anular esta venta? Se devolvera el Stock');" />
                     <asp:Label  runat="server" Text="Anulado" CssClass="badge bg-danger" Visible='<%# Convert.ToBoolean(Eval("Anulado")) %>'></asp:Label>
                     </ItemTemplate>

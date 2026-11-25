@@ -16,6 +16,13 @@ namespace TPI_FINAL_GRUPO8
         {
             txtId.Enabled = false;
 
+            Usuario usuario = Session["usuarioLogueado"] as Usuario;
+            if (usuario == null)
+            {
+                Response.Redirect("Login.aspx", false);
+                return;
+            }
+
             if (!IsPostBack)
             {
                 string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
@@ -142,6 +149,19 @@ namespace TPI_FINAL_GRUPO8
         {
             try
             {
+                Usuario usuario = Session["usuarioLogueado"] as Usuario;
+                if (usuario == null || usuario.Rol != "Administrador")
+                {
+                    lblError.Text = "Solo un Administrador puede Inactivar al Cliente";
+                    return;
+                }
+
+                if (Session["clienteSeleccionado"] == null)
+                {
+                    Response.Redirect("Clientes.aspx", false);
+                    return;
+                }
+
                 if (Session["clienteSeleccionado"] == null)
                 {
                     Response.Redirect("Clientes.aspx", false);

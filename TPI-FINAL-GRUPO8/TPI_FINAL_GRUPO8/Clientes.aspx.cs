@@ -13,6 +13,13 @@ namespace TPI_FINAL_GRUPO8
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Usuario usuario = Session["usuarioLogueado"] as Usuario;
+            if (usuario == null)
+            {
+                Response.Redirect("Login.aspx", false);
+                return;
+            }
+
             if (!IsPostBack)
             {
                 ClienteNegocio negocio = new ClienteNegocio();

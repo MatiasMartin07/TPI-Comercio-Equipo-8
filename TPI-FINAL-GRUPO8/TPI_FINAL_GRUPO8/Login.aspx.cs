@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dominio;
+using Negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -28,16 +30,43 @@ namespace TPI_FINAL_GRUPO8
             try
             {
                 //validacion
-                if (string.IsNullOrEmpty(txtUsuario.Text))
+                if (string.IsNullOrEmpty(txtUsuario.Text) || string.IsNullOrEmpty(txtPass.Text))
                 {
-                    lblError.Text = "Debe ingresar un usuario";
+                    lblError.Text = "Debe ingresar usuario y contraseña";
                     txtUsuario.BorderColor = System.Drawing.Color.Red;
                     return;
                 }
+                UsuarioNegocio negocio = new UsuarioNegocio();
+                Usuario usuario = new Usuario();
+                usuario = negocio.loguear(txtUsuario.Text, txtPass.Text);
+
+                if(usuario == null)
+                {
+                    lblError.Text = "Usuario o Contraseña incorrecta";
+                    txtUsuario.BorderColor = System.Drawing.Color.Red;
+                    return;
+                }
+                if (!usuario.Activo)
+                {
+                    lblError.Text = "El usuario esta Inactivo";
+                    txtUsuario.BorderColor = System.Drawing.Color.Red;
+                    return;
+                }
+                Session["usuarioLogueado"] = usuario;
+
+                if (usuario.Rol == "Administrador")
+                {
+                    Response.Redirect("Inicio.aspx", false);
+
+                }
+                else if (usuario.Rol == "Vendedor")
+                {
+                    Response.Redirect("Inicio.aspx", false);
+                }
                 else
                 {
-                    //buscar en la base que ese usuario exista
-
+                    lblError.Text = "Rol sin permisos asignados";
+                    return;
                 }
 
             }

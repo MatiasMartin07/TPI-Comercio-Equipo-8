@@ -19,6 +19,13 @@ namespace TPI_FINAL_GRUPO8
             txtNroFactura.Enabled = false;
             txtIdProducto.Enabled = false;
 
+            Usuario usuario = Session["usuarioLogueado"] as Usuario;
+            if (usuario == null)
+            {
+                Response.Redirect("Login.aspx", false);
+                return;
+            }
+
             if (!IsPostBack)
             {
                 CargarSiguienteFactura();

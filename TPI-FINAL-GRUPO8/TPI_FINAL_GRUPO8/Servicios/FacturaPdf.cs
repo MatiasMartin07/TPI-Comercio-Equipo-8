@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using PdfSharp.Drawing;
 
+
 namespace TPI_FINAL_GRUPO8.Servicios
 {
     public class FacturaPdf
