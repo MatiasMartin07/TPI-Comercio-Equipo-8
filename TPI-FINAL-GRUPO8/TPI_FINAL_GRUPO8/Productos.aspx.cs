@@ -19,7 +19,10 @@ namespace TPI_FINAL_GRUPO8
                 Response.Redirect("Login.aspx", false);
                 return;
             }
-            aNuevoProducto.Visible = usuario.Rol == "Administrador";
+            bool esAdmin = usuario.Rol == "Administrador";
+
+            aNuevoProducto.Visible = esAdmin;
+            gvProductos.Columns[gvProductos.Columns.Count - 1].Visible = esAdmin;
 
             if (!IsPostBack)
             {
