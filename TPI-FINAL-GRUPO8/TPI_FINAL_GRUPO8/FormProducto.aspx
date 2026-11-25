@@ -57,6 +57,24 @@
                             ValidationGroup="Producto" />
                     </div>
                     <div class="col-12">
+                        <asp:Label ID="lblProveedor" runat="server"
+                            CssClass="form-label"
+                            Text="Proveedor"
+                            AssociatedControlID="ddlProveedor" />
+
+                        <asp:DropDownList ID="ddlProveedor" runat="server"
+                            CssClass="form-select">
+                        </asp:DropDownList>
+
+                        <asp:RequiredFieldValidator ID="rfvProveedor" runat="server"
+                            ControlToValidate="ddlProveedor"
+                            InitialValue=""
+                            ErrorMessage="Seleccione un proveedor."
+                            CssClass="text-danger"
+                            Display="Dynamic"
+                            ValidationGroup="Producto" />
+                    </div>
+                    <div class="col-12">
                         <h3 class="h6 fw-semibold border-top pt-3 mt-2 mb-0">Stock</h3>
                     </div>
                     <div class="col-12 col-sm-6">

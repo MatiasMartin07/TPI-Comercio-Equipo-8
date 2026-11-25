@@ -128,7 +128,7 @@ namespace TPI_FINAL_GRUPO8
                         break;
                     }
                 }
-                
+
                 if (!cuitValido)
                 {
                     lblErrorCuit.Text = "El CUIT debe tener exactamente 11 dígitos, sin guiones.";
@@ -150,9 +150,30 @@ namespace TPI_FINAL_GRUPO8
                     return;
                 }
 
+                if (string.IsNullOrWhiteSpace(email))
+                {
+                    lblEmailError.Text = "Debe ingresar un email.";
+                    txtEmail.BorderColor = System.Drawing.Color.Red;
+                    return;
+                }
+
+                if (!email.Contains("@") || !email.Contains("."))
+                {
+                    lblEmailError.Text = "Debe ingresar un correo válido con '@' y un dominio.";
+                    txtEmail.BorderColor = System.Drawing.Color.Red;
+                    return;
+                }
+
                 if (string.IsNullOrWhiteSpace(telefono))
                 {
                     lblErrorTelefono.Text = "Debe ingresar un teléfono.";
+                    txtTelefono.BorderColor = System.Drawing.Color.Red;
+                    return;
+                }
+
+                if (!telefono.All(char.IsDigit))
+                {
+                    lblErrorTelefono.Text = "El teléfono solo debe contener números.";
                     txtTelefono.BorderColor = System.Drawing.Color.Red;
                     return;
                 }

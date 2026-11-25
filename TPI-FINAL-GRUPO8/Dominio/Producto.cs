@@ -12,6 +12,7 @@ namespace Dominio
         public string Nombre { get; set; }
         public Marca Marca { get; set; }
         public Categoria Categoria { get; set; }
+        public Proveedores Proveedores { get; set; }
         public int StockActual { get; set; }
         public int StockMinimo { get; set; }
         public decimal UltimoPrecioCompra { get; set; }

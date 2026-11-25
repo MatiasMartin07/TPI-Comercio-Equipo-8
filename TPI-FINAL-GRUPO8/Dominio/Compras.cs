@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
-    public class Compras : Proveedores
+    public class Compras
     {
-        public int IdCompras { get; set; }
+        public int IdCompra { get; set; }
         public DateTime Fecha { get; set; }
-        public Proveedores proveedor { get; set; }
-        public List<DetalleCompra> Detalle { get; set; }
+        public Proveedores Proveedor { get; set; }
+        public List<DetalleCompra> Detalles { get; set; }
         public decimal Total { get; set; }
     }
 }

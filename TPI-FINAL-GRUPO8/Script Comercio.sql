@@ -21,44 +21,6 @@ CREATE TABLE Categoria (
 );
 
 
-CREATE TABLE Producto (
-    IdProducto INT PRIMARY KEY IDENTITY(1,1),
-    Nombre VARCHAR(100) NOT NULL,
-    IdMarca INT NOT NULL,
-    IdCategoria INT NOT NULL,
-    StockActual INT NOT NULL,
-    StockMinimo INT NOT NULL,
-    UltimoPrecioCompra DECIMAL(18,2) NOT NULL,
-    PorcentajeGanancia DECIMAL(5,2) NOT NULL,
-    UrlImagen VARCHAR(2048) NULL,
-    Activo BIT NOT NULL,
-
-    CONSTRAINT FK_Producto_Marca
-        FOREIGN KEY (IdMarca) REFERENCES Marca(IdMarca),
-
-    CONSTRAINT FK_Producto_Categoria
-        FOREIGN KEY (IdCategoria) REFERENCES Categoria(IdCategoria)
-);
-
-create table Cliente(
-    Id int not null primary key identity(1,1),
-    Nombre varchar(50) not null,
-    Apellido varchar(50) not null,
-    Dni varchar(50) not null,
-    Email varchar(200) not null,
-    Activo Bit not null default 1
-);
-
-CREATE TABLE Usuario (
-    Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    Nombre VARCHAR(50) NOT NULL,
-    Apellido VARCHAR(50) NOT NULL,
-    NombreUsuario VARCHAR(50) NOT NULL UNIQUE,
-    Pass VARCHAR(100) NOT NULL,
-    Rol VARCHAR(30) NOT NULL,
-    Activo BIT NOT NULL DEFAULT 1
-);
-
 create table Proveedor(
 IdProveedor INT PRIMARY KEY IDENTITY(1,1),
 Codigo VARCHAR(50) UNIQUE NOT NULL,
@@ -70,6 +32,70 @@ Activo BIT NOT NULL
     CONSTRAINT DF_Proveedor_Activo DEFAULT (1)
 );
 GO
+
+CREATE TABLE Producto (
+    IdProducto INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(100) NOT NULL,
+    IdMarca INT NOT NULL,
+    IdCategoria INT NOT NULL,
+    IdProveedor INT NULL,
+    StockActual INT NOT NULL,
+    StockMinimo INT NOT NULL,
+    UltimoPrecioCompra DECIMAL(18,2) NOT NULL,
+    PorcentajeGanancia DECIMAL(5,2) NOT NULL,
+    UrlImagen VARCHAR(2048) NULL,
+    Activo BIT NOT NULL,
+
+    CONSTRAINT FK_Producto_Marca
+        FOREIGN KEY (IdMarca) REFERENCES Marca(IdMarca),
+
+      CONSTRAINT FK_Producto_Categoria
+        FOREIGN KEY (IdCategoria) REFERENCES Categoria(IdCategoria),
+
+    CONSTRAINT FK_Producto_Proveedor
+        FOREIGN KEY (IdProveedor) REFERENCES Proveedor(IdProveedor)
+);
+GO
+
+create table Cliente(
+    Id int not null primary key identity(1,1),
+    Nombre varchar(50) not null,
+    Apellido varchar(50) not null,
+    Dni varchar(50) not null,
+    Email varchar(200) not null,
+    Activo Bit not null default 1
+);
+GO
+CREATE TABLE Usuario (
+    Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(50) NOT NULL,
+    Apellido VARCHAR(50) NOT NULL,
+    NombreUsuario VARCHAR(50) NOT NULL UNIQUE,
+    Pass VARCHAR(100) NOT NULL,
+    Rol VARCHAR(30) NOT NULL,
+    Activo BIT NOT NULL DEFAULT 1
+);
+GO
+CREATE TABLE Compra (
+    IdCompra INT PRIMARY KEY IDENTITY(1,1),
+    Fecha DATETIME NOT NULL DEFAULT GETDATE(),
+    IdProveedor INT NOT NULL,
+    Total DECIMAL(18, 2) NOT NULL DEFAULT 0 CHECK (Total >= 0),
+    FOREIGN KEY (IdProveedor) REFERENCES Proveedor(IdProveedor)
+);
+GO
+CREATE TABLE DetalleCompra (
+    IdDetalleCompra INT PRIMARY KEY IDENTITY(1,1),
+    IdCompra INT NOT NULL, 
+    IdProducto INT NOT NULL,
+    Cantidad INT NOT NULL CHECK (Cantidad > 0),
+    PrecioUnitario DECIMAL(18, 2) NOT NULL CHECK (PrecioUnitario >= 0),
+    SubTotal AS (Cantidad * PrecioUnitario) PERSISTED,
+    FOREIGN KEY (IdCompra) REFERENCES Compra(IdCompra),
+    FOREIGN KEY (IdProducto) REFERENCES Producto(IdProducto)
+);
+GO
+
 
 Create table Venta(
    Id int not null primary key identity(1,1),
@@ -90,8 +116,6 @@ Create table DetalleVenta(
     PrecioUnitario decimal(18,2) not null,
     SubTotal decimal(18,2) not null
 )
-
-
 
 ---Carga de datos---
 INSERT INTO Marca (Nombre)
@@ -121,7 +145,6 @@ VALUES
     ('Galletitas',  3, 1, 16,  6, 900.00, 35.00, 1),
     ('Detergente',  3, 3, 14,  5, 1500.00, 30.00, 1);
 GO
-
 
 INSERT INTO Cliente (Nombre, Apellido,Dni,Email,Activo) 
 VALUES 
