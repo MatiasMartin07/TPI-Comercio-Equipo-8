@@ -273,3 +273,30 @@ body:has(.banner-modulo) .navbar > .container {
 .formulario-simple-datos {
     margin-top: 80px;
 }
+
+/* Los campos de Ventas aprovechan el ancho disponible */
+.ventas-pagina .form-control {
+    max-width: none;
+    min-width: 0;
+}
+
+/* Total compacto sobre el boton de finalizar, alineados a la derecha */
+.ventas-pagina .venta-total-resumen {
+    width: 350px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+/* El importe completa el grupo sin dejar un espacio vacio al final */
+.ventas-pagina .venta-total-resumen .form-control {
+    max-width: none;
+    min-width: 0;
+}
+
+/* Conservar el ancho natural del boton y adaptarlo a pantallas angostas */
+.ventas-pagina .venta-finalizar {
+    max-width: 100%;
+    margin-left: auto;
+    white-space: normal;
+}
